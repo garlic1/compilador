@@ -24,6 +24,7 @@ int print_token (int token);
 int main (int argc, char **argv) {
   int token = 0, retorno = 0;
   while ((token = yylex()) && retorno == 0) {
+    printf("%d", token);
     retorno = print_token(token);
   }
   yylex_destroy();
