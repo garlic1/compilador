@@ -34,6 +34,7 @@
 [0-9]*"."[0-9]+     {return TK_LIT_FLOAT;}
 
 "/*"                {BEGIN(COMMENT);}
+<COMMENT>\n         {yylineno++;}
 <COMMENT>.          {/* ignore */}
 <COMMENT>"*/"       {BEGIN(INITIAL);}
 
