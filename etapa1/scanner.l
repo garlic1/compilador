@@ -52,10 +52,6 @@ int get_line_number() {
     return yylineno;
 }
 
-int main() {
-    yylex();
-}
-
 int yywrap() {
     return 1;
 }
