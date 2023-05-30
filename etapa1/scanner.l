@@ -15,6 +15,9 @@
 "while"             {return TK_PR_WHILE;}
 "return"            {return TK_PR_RETURN;}
 
+[0-9]+              {return TK_LIT_INT;}
+[0-9]*"."[0-9]+     {return TK_LIT_FLOAT;}
+
 [-!*/%+-<>\{\}()=,;] {return (int)yytext[0];}
 
 "<="                {return TK_OC_LE;}
@@ -29,9 +32,6 @@
 "true"              {return TK_LIT_TRUE;}
 
 ("_"|[a-z])+        {return TK_IDENTIFICADOR;}
-
-[0-9]+              {return TK_LIT_INT;}
-[0-9]*"."[0-9]+     {return TK_LIT_FLOAT;}
 
 "/*"                {BEGIN(COMMENT);}
 <COMMENT>\n         {yylineno++;}
