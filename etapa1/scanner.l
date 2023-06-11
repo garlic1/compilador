@@ -18,7 +18,7 @@
 [0-9]+              {return TK_LIT_INT;}
 [0-9]*"."[0-9]+     {return TK_LIT_FLOAT;}
 
-[-!*/%+-<>\{\}()=,;] {return (int)yytext[0];}
+[!*/%+\-<>\{\}()=,;] {return (int)yytext[0];}
 
 "<="                {return TK_OC_LE;}
 ">="                {return TK_OC_GE;}
