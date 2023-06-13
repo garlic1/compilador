@@ -1,7 +1,7 @@
 %option yylineno
 
 %{
-    #include "tokens.h"
+    #include "parser.tab.h"
 %}
 
 %x COMMENT

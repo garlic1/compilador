@@ -1,4 +1,7 @@
 %{
+#include <stdio.h>
+#include <stdlib.h>
+
 int yylex(void);
 void yyerror (char const *s);
 %}
@@ -24,60 +27,16 @@ void yyerror (char const *s);
 %token TK_LIT_TRUE
 %token TK_ERRO
 
+%start program
+
 %%
 
 // um programa é composto por variaveis globais e funçoes, ambos podendo ser vazios
-program: global_variables functions
-    ;
-
-global_variables: global_variable global_variables
-    | /* empty */
-    ;
-
-global_variable: variable_types TK_IDENTIFICADOR ';'
-    ;
-
-// funcoes
-functions: function functions
-    | /* empty */
-    ;
-
-function: function_head function_body
-    ;
-
-function_head: TK_IDENTIFICADOR '(' parameter_list ')' TK_OC_MAP variable_types
-    ;
-
-parameter_list: parameter ',' parameter_list
-    | parameter
-    | /* empty */
-    ;
-
-parameter: variable_types TK_IDENTIFICADOR
-    ;
-
-function_body: cmd_block
-    ;
-
-// um bloco de comandos é composto por comandos separados por ponto e virgula
-cmd_block: '{' cmd ';' cmd_block '}'
-    | /* empty */
-    ;
-
-// comando pode ser declaraçao de variavel, comando de atribuiçao, chamada de funçao, comando de retorno ou comando de controle de fluxo
-cmd: variable_declaration
-    | attribution_cmd
-    | function_call
-    | return_cmd
-    | flow_control_cmd
-    ;
-
-
-// tipos
-variable_types: TK_PR_INT
-    | TK_PR_FLOAT
-    | TK_PR_BOOL
-    ;
-
+program: TK_LIT_INT;
 
 %%
+
+void yyerror(char const *s)
+{
+  fprintf(stderr, "%s\n", s);  
+}
