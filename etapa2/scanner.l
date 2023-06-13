@@ -48,6 +48,8 @@
 
 %%
 
+#include "main.c"
+
 int get_line_number() {
     return yylineno;
 }
@@ -55,5 +57,3 @@ int get_line_number() {
 int yywrap() {
     return 1;
 }
-
-#include "main.c"
