@@ -31,7 +31,7 @@
 "false"             {return TK_LIT_FALSE;}
 "true"              {return TK_LIT_TRUE;}
 
-("_"|[a-z])+        {return TK_IDENTIFICADOR;}
+[_a-z][_a-zA-Z0-9]* {return TK_IDENTIFICADOR;}
 
 "/*"                {BEGIN(COMMENT);}
 <COMMENT>\n         {yylineno++;}
