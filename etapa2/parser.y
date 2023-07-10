@@ -70,8 +70,12 @@ listParam: type TK_IDENTIFICADOR ',' listParam
 
 bloco: '{' lcmd '}';
 
+escopo: bloco ';';
+
 lcmd: cmd ';' lcmd
     | cmd_fluxo lcmd
+    | cmd_fluxo ';' lcmd
+    | escopo lcmd
     |;
 
 cmd: type listID_ATTR
