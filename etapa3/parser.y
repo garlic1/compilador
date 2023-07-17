@@ -1,32 +1,64 @@
 %{
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 int yylex(void);
 void yyerror (char const *s);
 int get_line_number();
+extern void *arvore;
 
 %}
 
-%token TK_PR_INT
-%token TK_PR_FLOAT
-%token TK_PR_BOOL
-%token TK_PR_IF
-%token TK_PR_ELSE
-%token TK_PR_WHILE
-%token TK_PR_RETURN
-%token TK_OC_LE
-%token TK_OC_GE
-%token TK_OC_EQ
-%token TK_OC_NE
-%token TK_OC_AND
-%token TK_OC_OR
-%token TK_OC_MAP
-%token TK_IDENTIFICADOR
-%token TK_LIT_INT
-%token TK_LIT_FLOAT
-%token TK_LIT_FALSE
-%token TK_LIT_TRUE
+%code requires { #include "ast.h" }
+
+%union {
+    data *valor_lexico;
+    asd_tree *arvore;
+}
+
+%type<arvore> program
+%type<arvore> ldecl
+%type<arvore> listID
+%type<arvore> fun
+%type<arvore> paramFun
+%type<arvore> listParamFun
+%type<arvore> bloco
+%type<arvore> escopo
+%type<arvore> lcmd
+%type<arvore> cmd
+%type<arvore> listID_ATTR
+%type<arvore> expr
+%type<arvore> value
+
+
+%type<valor_lexico> literal
+
+
+%token<valor_lexico> TK_PR_INT
+%token<valor_lexico> TK_PR_FLOAT
+%token<valor_lexico> TK_PR_BOOL
+%token<valor_lexico> TK_PR_IF
+%token<valor_lexico> TK_PR_ELSE
+%token<valor_lexico> TK_PR_WHILE
+%token<valor_lexico> TK_PR_RETURN
+
+%token<valor_lexico> TK_OC_LE
+%token<valor_lexico> TK_OC_GE
+%token<valor_lexico> TK_OC_EQ
+%token<valor_lexico> TK_OC_NE
+%token<valor_lexico> TK_OC_AND
+%token<valor_lexico> TK_OC_OR
+%token<valor_lexico> TK_OC_MAP
+
+%token<valor_lexico> TK_IDENTIFICADOR
+%token<valor_lexico> TK_LIT_INT
+%token<valor_lexico> TK_LIT_FLOAT
+%token<valor_lexico> TK_LIT_FALSE
+%token<valor_lexico> TK_LIT_TRUE
+
+%token<valor_lexico> '='
+
 %token TK_ERRO
 
 %start program
@@ -34,57 +66,59 @@ int get_line_number();
 %%
 
 // um programa é composto por variaveis globais e funçoes, ambos podendo ser vazios
-program: ldecl;        
+program: ldecl          { arvore = $$;}
+        |               { arvore = NULL;};
 
-ldecl: global_var ldecl
-     | fun ldecl
-     |;
+ldecl: global_var ldecl { $$ = $2; }
+     | fun ldecl        { $$ = $1; asd_add_child($$, $2); }
+     | global_var       { $$ = NULL; }
+     | fun              { $$ = $1; };
 
-type: TK_PR_INT
+tipo: TK_PR_INT
     | TK_PR_FLOAT
     | TK_PR_BOOL;
 
-literal: TK_LIT_TRUE
-        |TK_LIT_FALSE
-        |TK_LIT_INT
-        |TK_LIT_FLOAT;
+literal: TK_LIT_TRUE    { $$ = $1; }
+        |TK_LIT_FALSE   { $$ = $1; }
+        |TK_LIT_INT     { $$ = $1; }
+        |TK_LIT_FLOAT   { $$ = $1; };
 
-global_var: type listID ';';
+global_var: tipo listID ';' ;
 
 listID: TK_IDENTIFICADOR ',' listID
         | TK_IDENTIFICADOR;
 
-fun: TK_IDENTIFICADOR '(' paramFun ')' TK_OC_MAP type bloco;
+fun: TK_IDENTIFICADOR '(' paramFun ')' TK_OC_MAP tipo bloco { $$ = asd_new($1); asd_add_child($$, $3); asd_add_child($$, $7); };
 
-paramFun: listParamFun
-        |;
+paramFun: listParamFun { $$ = $1; }
+        | { $$ = NULL; };
 
-listParamFun: type TK_IDENTIFICADOR ',' listParamFun
-            | type TK_IDENTIFICADOR;
+listParamFun: tipo TK_IDENTIFICADOR ',' listParamFun { $$ = asd_new($2); asd_add_child($$, $4); }
+            | tipo TK_IDENTIFICADOR { $$ = asd_new($2); };
 
-bloco: '{' lcmd '}';
+bloco: '{' lcmd '}' { $$ = $2; };
 
-escopo: bloco ';';
+escopo: bloco ';' { $$ = $1; };
 
-lcmd: cmd ';' lcmd
+lcmd: cmd ';' lcmd { if($1 == NULL){$$ = $3;}else{$$ = $1; asd_add_child_end($$, $3);}}
     | cmd_fluxo lcmd
     | cmd_fluxo ';' lcmd
     | escopo lcmd
-    |;
+    | {$$ = NULL;};
 
-cmd: type listID_ATTR
-    | TK_IDENTIFICADOR '=' expr
-    | TK_IDENTIFICADOR '(' paramFunBloco ')'
-    | TK_PR_RETURN expr; 
+cmd: tipo listID_ATTR { $$ = $2;}
+    | TK_IDENTIFICADOR '=' expr { $$ = asd_new($2); asd_add_child($$, asd_new($1)); asd_add_child($$, $3);}
+    | TK_IDENTIFICADOR '(' paramFunBloco ')' 
+    | TK_PR_RETURN expr  { $$ = asd_new($1); asd_add_child($$, $2);}; 
 
 cmd_fluxo: TK_PR_IF '(' expr ')' bloco
          | TK_PR_IF '(' expr ')' bloco TK_PR_ELSE bloco
          | TK_PR_WHILE '(' expr ')' bloco;
 
-listID_ATTR: TK_IDENTIFICADOR TK_OC_LE literal ',' listID_ATTR
-           |TK_IDENTIFICADOR TK_OC_LE literal
-           |TK_IDENTIFICADOR ',' listID_ATTR
-           |TK_IDENTIFICADOR;
+listID_ATTR: TK_IDENTIFICADOR TK_OC_LE literal ',' listID_ATTR { $$ = asd_new($2); asd_add_child($$, asd_new($1)); asd_add_child($$, asd_new($3)); asd_add_child($$, $5); }
+           |TK_IDENTIFICADOR TK_OC_LE literal                  { $$ = asd_new($2); asd_add_child($$, asd_new($1)); asd_add_child($$, asd_new($3)); }
+           |TK_IDENTIFICADOR ',' listID_ATTR                   { $$ = $3; }
+           |TK_IDENTIFICADOR                                   { $$ = NULL; };
 
 paramFunBloco: listExpr
              |;
@@ -92,8 +126,8 @@ paramFunBloco: listExpr
 listExpr: expr ',' listExpr
         | expr;
 
-expr: '(' expr ')'
-    | '-' expr
+expr: '(' expr ')'  
+    | '-' expr      
     | '!' expr
     | value '*' expr
     | value '/' expr    
@@ -113,7 +147,7 @@ expr: '(' expr ')'
 
 value: TK_IDENTIFICADOR
     | TK_IDENTIFICADOR '(' paramFunBloco ')'
-    | literal;
+    | literal { $$ =  asd_new($1);};
 
 
 %%

@@ -1,0 +1,53 @@
+# Executado assim: ./output2dot.sh 
+# https://graphviz.org/doc/info/lang.html
+digraph {
+  x5570438a8120 [label = "f"]
+  x5570438a8120 -> x5570438a7570
+  x5570438a7570 [label = "a"]
+  x5570438a7570 -> x5570438a7520
+  x5570438a7520 [label = "b"]
+  x5570438a7520 -> x5570438a74f0
+  x5570438a74f0 [label = "c"]
+  x5570438a8120 -> x5570438a7b20
+  x5570438a7b20 [label = "<="]
+  x5570438a7b20 -> x5570438a7b50
+  x5570438a7b50 [label = "c"]
+  x5570438a7b20 -> x5570438a7ba0
+  x5570438a7ba0 [label = "3"]
+  x5570438a7b20 -> x5570438a7a70
+  x5570438a7a70 [label = "<="]
+  x5570438a7a70 -> x5570438a7aa0
+  x5570438a7aa0 [label = "e"]
+  x5570438a7a70 -> x5570438a7af0
+  x5570438a7af0 [label = "4"]
+  x5570438a7a70 -> x5570438a79c0
+  x5570438a79c0 [label = "<="]
+  x5570438a79c0 -> x5570438a79f0
+  x5570438a79f0 [label = "f"]
+  x5570438a79c0 -> x5570438a7a40
+  x5570438a7a40 [label = "5"]
+  x5570438a79c0 -> x5570438a7cc0
+  x5570438a7cc0 [label = "="]
+  x5570438a7cc0 -> x5570438a7cf0
+  x5570438a7cf0 [label = "a"]
+  x5570438a7cc0 -> x5570438a7c90
+  x5570438a7c90 [label = "0"]
+  x5570438a7cc0 -> x5570438a7e30
+  x5570438a7e30 [label = "="]
+  x5570438a7e30 -> x5570438a7e60
+  x5570438a7e60 [label = "s"]
+  x5570438a7e30 -> x5570438a7e00
+  x5570438a7e00 [label = "2"]
+  x5570438a7e30 -> x5570438a7fa0
+  x5570438a7fa0 [label = "="]
+  x5570438a7fa0 -> x5570438a7fd0
+  x5570438a7fd0 [label = "s"]
+  x5570438a7fa0 -> x5570438a7f70
+  x5570438a7f70 [label = "6"]
+  x5570438a7fa0 -> x5570438a80d0
+  x5570438a80d0 [label = "return"]
+  x5570438a80d0 -> x5570438a80a0
+  x5570438a80a0 [label = "9"]
+  x5570438a8120 -> x5570438a8230
+  x5570438a8230 [label = "g"]
+}

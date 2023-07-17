@@ -1,37 +1,40 @@
 %option yylineno
 
 %{
-    #include "parser.tab.h"    
+    #include "parser.tab.h"
+    #include "ast.h"
 %}
 
 %x COMMENT
 %%
 
-"int"               {return TK_PR_INT;}
-"float"             {return TK_PR_FLOAT;}
-"bool"              {return TK_PR_BOOL;}
-"if"                {return TK_PR_IF;}
-"else"              {return TK_PR_ELSE;}
-"while"             {return TK_PR_WHILE;}
-"return"            {return TK_PR_RETURN;}
+"int"               { yylval.valor_lexico = new_data(yytext, yylineno, PALAVRA_RESERVADA); return TK_PR_INT;}
+"float"             { yylval.valor_lexico = new_data(yytext, yylineno, PALAVRA_RESERVADA); return TK_PR_FLOAT;}
+"bool"              { yylval.valor_lexico = new_data(yytext, yylineno, PALAVRA_RESERVADA); return TK_PR_BOOL;}
+"if"                { yylval.valor_lexico = new_data(yytext, yylineno, PALAVRA_RESERVADA); return TK_PR_IF;}
+"else"              { yylval.valor_lexico = new_data(yytext, yylineno, PALAVRA_RESERVADA); return TK_PR_ELSE;}
+"while"             { yylval.valor_lexico = new_data(yytext, yylineno, PALAVRA_RESERVADA); return TK_PR_WHILE;}
+"return"            { yylval.valor_lexico = new_data(yytext, yylineno, PALAVRA_RESERVADA); return TK_PR_RETURN;}
 
-[0-9]+              {return TK_LIT_INT;}
-[0-9]*"."[0-9]+     {return TK_LIT_FLOAT;}
+[0-9]+              { yylval.valor_lexico = new_data(yytext, yylineno, LITERAL); return TK_LIT_INT;}
+[0-9]*"."[0-9]+     { yylval.valor_lexico = new_data(yytext, yylineno, LITERAL); return TK_LIT_FLOAT;}
 
-[!*/%+\-<>\{\}()=,;] {return (int)yytext[0];}
+[\{\}(),;]          { return (int)yytext[0]; }
 
-"<="                {return TK_OC_LE;}
-">="                {return TK_OC_GE;}
-"=="                {return TK_OC_EQ;}
-"!="                {return TK_OC_NE;}
-"&"                 {return TK_OC_AND;}
-"|"                 {return TK_OC_OR;}
-"->"                {return TK_OC_MAP;}
+"<="                { yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_LE;}
+">="                { yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_GE;}
+"=="                { yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_EQ;}
+"!="                {  yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_NE;}
+"&"                 {  yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_AND;}
+"|"                 {  yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_OR;}
+"->"                {  yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_MAP;}
 
-"false"             {return TK_LIT_FALSE;}
-"true"              {return TK_LIT_TRUE;}
+[<>!*/%+\-=]        { yylval.valor_lexico = new_data(yytext, yylineno, CARACTERE_ESPECIAL); return (int)yytext[0];}
 
-[_a-z][_a-zA-Z0-9]* {return TK_IDENTIFICADOR;}
+"false"             { yylval.valor_lexico = new_data(yytext, yylineno, LITERAL); return TK_LIT_FALSE;}
+"true"              { yylval.valor_lexico = new_data(yytext, yylineno, LITERAL); return TK_LIT_TRUE;}
+
+[_a-z][_a-zA-Z0-9]* { yylval.valor_lexico = new_data(yytext, yylineno, IDENTIFICADOR); return TK_IDENTIFICADOR; }
 
 "/*"                {BEGIN(COMMENT);}
 <COMMENT>\n         {yylineno++;}
@@ -47,6 +50,7 @@
 .                   {return TK_ERRO;}
 
 %%
+
 
 int get_line_number() {
     return yylineno;

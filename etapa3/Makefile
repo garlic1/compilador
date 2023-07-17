@@ -1,8 +1,8 @@
-etapa3: parser.tab.o lex.yy.o main.o
-	gcc -o etapa3 lex.yy.o parser.tab.o main.o -lfl
+etapa3: parser.tab.o lex.yy.o main.o ast.o
+	gcc -o etapa3 lex.yy.o parser.tab.o main.o ast.o -lfl
 
-parser.tab.o lex.yy.o main.o : parser.tab.c lex.yy.c main.c
-	gcc -c parser.tab.c lex.yy.c main.c
+parser.tab.o lex.yy.o main.o ast.o : parser.tab.c lex.yy.c main.c ast.c
+	gcc -c parser.tab.c lex.yy.c main.c ast.c
 
 lex.yy.c: scanner.l
 		  flex scanner.l
