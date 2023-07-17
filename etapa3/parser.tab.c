@@ -1339,7 +1339,7 @@ yyreduce:
 
   case 32: /* cmd: TK_IDENTIFICADOR '(' paramFunBloco ')'  */
 #line 123 "parser.y"
-                                             { (yyval.arvore) =  asd_new((yyvsp[-3].valor_lexico)); asd_add_child((yyval.arvore), (yyvsp[-1].arvore));}
+                                             { (yyval.arvore) =  asd_new_call((yyvsp[-3].valor_lexico)); asd_add_child((yyval.arvore), (yyvsp[-1].arvore));}
 #line 1344 "parser.tab.c"
     break;
 
@@ -1525,7 +1525,7 @@ yyreduce:
 
   case 63: /* value: TK_IDENTIFICADOR '(' paramFunBloco ')'  */
 #line 160 "parser.y"
-                                             { (yyval.arvore) =  asd_new((yyvsp[-3].valor_lexico)); asd_add_child((yyval.arvore), (yyvsp[-1].arvore));}
+                                             { (yyval.arvore) =  asd_new_call((yyvsp[-3].valor_lexico)); asd_add_child((yyval.arvore), (yyvsp[-1].arvore));}
 #line 1530 "parser.tab.c"
     break;
 
@@ -1734,5 +1734,6 @@ yyreturnlab:
 
 void yyerror(char const *s)
 {
+  arvore = NULL; 
   fprintf(stderr, "%s at line: %d\n",s, get_line_number());  
 }

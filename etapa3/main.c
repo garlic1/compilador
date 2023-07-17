@@ -14,14 +14,13 @@ void *arvore = NULL;
 void exporta(asd_tree *tree)
 {
   if (tree == NULL){
-    printf("Arvore nula\n");
     return;
   }else{
     printf("%p [label = \"%s\"]\n", tree, tree->token.valor_token);
     //printf("%p [label = \"%s\", %d, %d]\n", tree, tree->token.valor_token, tree->token.line_number, tree->token.tipo);
     for(int i = 0; i < tree->number_of_children; i++)
     {
-        printf("%p, %p\n", tree, tree->children[i]);
+        printf("%p, %p\n", tree, tree->children[i]);        
         exporta(tree->children[i]);
     }    
   }

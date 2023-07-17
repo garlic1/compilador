@@ -31,6 +31,10 @@ data *new_data(const char *newlabel, int newNumberLine, int tipo);
  */
 asd_tree *asd_new(data *dados);
 /*
+ * Função asd_new, cria um nó sem filhos com o label informado.
+ */
+asd_tree *asd_new_call(data *dados);
+/*
  * Função asd_add_child, adiciona child como filho de tree.
  */
 void asd_add_child(asd_tree *tree, asd_tree *child);

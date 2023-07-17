@@ -27,6 +27,22 @@ asd_tree *asd_new(data *dados)
   return ret;
 }
 
+asd_tree *asd_new_call(data *dados)
+{
+  asd_tree *ret = NULL;  
+  ret = calloc(1, sizeof(asd_tree));
+  if (ret != NULL){  
+    char *newToken = calloc(1, sizeof(dados->valor_token) + 5*sizeof(char));
+    strcpy(newToken, "call ");
+    strcat(newToken, dados->valor_token);
+    dados->valor_token = newToken;    
+    ret->token = *dados;
+    ret->number_of_children = 0;
+    ret->children = NULL;
+  }
+  return ret;
+}
+
 void asd_add_child(asd_tree *tree, asd_tree *child)
 {
   if (tree != NULL && child != NULL){

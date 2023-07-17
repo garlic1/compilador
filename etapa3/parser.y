@@ -120,7 +120,7 @@ lcmd: cmd ';' lcmd          { if($1 == NULL){$$ = $3;}else{$$ = $1; asd_add_chil
 
 cmd: tipo listID_ATTR { $$ = $2;}
     | TK_IDENTIFICADOR '=' expr { $$ = asd_new($2); asd_add_child($$, asd_new($1)); asd_add_child($$, $3);}
-    | TK_IDENTIFICADOR '(' paramFunBloco ')' { $$ =  asd_new($1); asd_add_child($$, $3);}
+    | TK_IDENTIFICADOR '(' paramFunBloco ')' { $$ =  asd_new_call($1); asd_add_child($$, $3);}
     | TK_PR_RETURN expr  { $$ = asd_new($1); asd_add_child($$, $2);}; 
 
 cmd_fluxo: TK_PR_IF '(' expr ')' bloco                      { $$ = asd_new($1); asd_add_child($$, $3); asd_add_child($$, $5); }
@@ -157,7 +157,7 @@ expr: '(' expr ')'              { $$ = $2; }
     | value                     { $$ =  $1;};       
 
 value: TK_IDENTIFICADOR { $$ =  asd_new($1);}
-    | TK_IDENTIFICADOR '(' paramFunBloco ')' { $$ =  asd_new($1); asd_add_child($$, $3);}
+    | TK_IDENTIFICADOR '(' paramFunBloco ')' { $$ =  asd_new_call($1); asd_add_child($$, $3);}
     | literal { $$ =  asd_new($1);};
 
 
@@ -165,5 +165,6 @@ value: TK_IDENTIFICADOR { $$ =  asd_new($1);}
 
 void yyerror(char const *s)
 {
+  arvore = NULL; 
   fprintf(stderr, "%s at line: %d\n",s, get_line_number());  
 }
