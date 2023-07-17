@@ -30,6 +30,8 @@ extern void *arvore;
 %type<arvore> listID_ATTR
 %type<arvore> expr
 %type<arvore> value
+%type<arvore> paramFunBloco
+%type<arvore> listExpr
 
 
 %type<valor_lexico> literal
@@ -58,6 +60,15 @@ extern void *arvore;
 %token<valor_lexico> TK_LIT_TRUE
 
 %token<valor_lexico> '='
+%token<valor_lexico> '-'
+%token<valor_lexico> '!'
+%token<valor_lexico> '*'
+%token<valor_lexico> '/'
+%token<valor_lexico> '%'
+%token<valor_lexico> '+'
+%token<valor_lexico> '<'
+%token<valor_lexico> '>'
+
 
 %token TK_ERRO
 
@@ -108,7 +119,7 @@ lcmd: cmd ';' lcmd { if($1 == NULL){$$ = $3;}else{$$ = $1; asd_add_child_end($$,
 
 cmd: tipo listID_ATTR { $$ = $2;}
     | TK_IDENTIFICADOR '=' expr { $$ = asd_new($2); asd_add_child($$, asd_new($1)); asd_add_child($$, $3);}
-    | TK_IDENTIFICADOR '(' paramFunBloco ')' 
+    | TK_IDENTIFICADOR '(' paramFunBloco ')' { $$ =  asd_new($1); asd_add_child($$, $3);}
     | TK_PR_RETURN expr  { $$ = asd_new($1); asd_add_child($$, $2);}; 
 
 cmd_fluxo: TK_PR_IF '(' expr ')' bloco
@@ -120,33 +131,32 @@ listID_ATTR: TK_IDENTIFICADOR TK_OC_LE literal ',' listID_ATTR { $$ = asd_new($2
            |TK_IDENTIFICADOR ',' listID_ATTR                   { $$ = $3; }
            |TK_IDENTIFICADOR                                   { $$ = NULL; };
 
-paramFunBloco: listExpr
-             |;
+paramFunBloco: listExpr { $$ = $1; }
+             | { $$ = NULL; };
 
-listExpr: expr ',' listExpr
-        | expr;
+listExpr: expr ',' listExpr { $$ = $1; asd_add_child($$, $3); }
+        | expr { $$ = $1; };
 
-expr: '(' expr ')'  
-    | '-' expr      
-    | '!' expr
-    | value '*' expr
-    | value '/' expr    
-    | value '%' expr
-    | value '+' expr
-    | value '-' expr
-    | value '<' expr
-    | value '>' expr
-    | value TK_OC_LE expr
-    | value TK_OC_GE expr
-    | value TK_OC_EQ expr
-    | value TK_OC_NE expr
-    | value TK_OC_AND expr
-    | value TK_OC_OR expr
-    | value;
-    
+expr: '(' expr ')'              { $$ = $2; }
+    | '-' expr                  { $$ = asd_new($1); asd_add_child($$, $2); }
+    | '!' expr                  { $$ = asd_new($1); asd_add_child($$, $2); }
+    | value '*' expr            { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
+    | value '/' expr            { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
+    | value '%' expr            { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
+    | value '+' expr            { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
+    | value '-' expr            { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
+    | value '<' expr            { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
+    | value '>' expr            { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
+    | value TK_OC_LE expr       { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
+    | value TK_OC_GE expr       { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
+    | value TK_OC_EQ expr       { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
+    | value TK_OC_NE expr       { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
+    | value TK_OC_AND expr      { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
+    | value TK_OC_OR expr       { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
+    | value                     { $$ =  $1;};       
 
-value: TK_IDENTIFICADOR
-    | TK_IDENTIFICADOR '(' paramFunBloco ')'
+value: TK_IDENTIFICADOR { $$ =  asd_new($1);}
+    | TK_IDENTIFICADOR '(' paramFunBloco ')' { $$ =  asd_new($1); asd_add_child($$, $3);}
     | literal { $$ =  asd_new($1);};
 
 

@@ -1,53 +1,87 @@
 # Executado assim: ./output2dot.sh 
 # https://graphviz.org/doc/info/lang.html
 digraph {
-  x5570438a8120 [label = "f"]
-  x5570438a8120 -> x5570438a7570
-  x5570438a7570 [label = "a"]
-  x5570438a7570 -> x5570438a7520
-  x5570438a7520 [label = "b"]
-  x5570438a7520 -> x5570438a74f0
-  x5570438a74f0 [label = "c"]
-  x5570438a8120 -> x5570438a7b20
-  x5570438a7b20 [label = "<="]
-  x5570438a7b20 -> x5570438a7b50
-  x5570438a7b50 [label = "c"]
-  x5570438a7b20 -> x5570438a7ba0
-  x5570438a7ba0 [label = "3"]
-  x5570438a7b20 -> x5570438a7a70
-  x5570438a7a70 [label = "<="]
-  x5570438a7a70 -> x5570438a7aa0
-  x5570438a7aa0 [label = "e"]
-  x5570438a7a70 -> x5570438a7af0
-  x5570438a7af0 [label = "4"]
-  x5570438a7a70 -> x5570438a79c0
-  x5570438a79c0 [label = "<="]
-  x5570438a79c0 -> x5570438a79f0
-  x5570438a79f0 [label = "f"]
-  x5570438a79c0 -> x5570438a7a40
-  x5570438a7a40 [label = "5"]
-  x5570438a79c0 -> x5570438a7cc0
-  x5570438a7cc0 [label = "="]
-  x5570438a7cc0 -> x5570438a7cf0
-  x5570438a7cf0 [label = "a"]
-  x5570438a7cc0 -> x5570438a7c90
-  x5570438a7c90 [label = "0"]
-  x5570438a7cc0 -> x5570438a7e30
-  x5570438a7e30 [label = "="]
-  x5570438a7e30 -> x5570438a7e60
-  x5570438a7e60 [label = "s"]
-  x5570438a7e30 -> x5570438a7e00
-  x5570438a7e00 [label = "2"]
-  x5570438a7e30 -> x5570438a7fa0
-  x5570438a7fa0 [label = "="]
-  x5570438a7fa0 -> x5570438a7fd0
-  x5570438a7fd0 [label = "s"]
-  x5570438a7fa0 -> x5570438a7f70
-  x5570438a7f70 [label = "6"]
-  x5570438a7fa0 -> x5570438a80d0
-  x5570438a80d0 [label = "return"]
-  x5570438a80d0 -> x5570438a80a0
-  x5570438a80a0 [label = "9"]
-  x5570438a8120 -> x5570438a8230
-  x5570438a8230 [label = "g"]
+  x56361f1e89d0 [label = "f"]
+  x56361f1e89d0 -> x56361f1e7570
+  x56361f1e7570 [label = "a"]
+  x56361f1e7570 -> x56361f1e7520
+  x56361f1e7520 [label = "b"]
+  x56361f1e7520 -> x56361f1e74f0
+  x56361f1e74f0 [label = "c"]
+  x56361f1e89d0 -> x56361f1e7b20
+  x56361f1e7b20 [label = "<="]
+  x56361f1e7b20 -> x56361f1e7b50
+  x56361f1e7b50 [label = "c"]
+  x56361f1e7b20 -> x56361f1e7ba0
+  x56361f1e7ba0 [label = "3"]
+  x56361f1e7b20 -> x56361f1e7a70
+  x56361f1e7a70 [label = "<="]
+  x56361f1e7a70 -> x56361f1e7aa0
+  x56361f1e7aa0 [label = "e"]
+  x56361f1e7a70 -> x56361f1e7af0
+  x56361f1e7af0 [label = "4"]
+  x56361f1e7a70 -> x56361f1e79c0
+  x56361f1e79c0 [label = "<="]
+  x56361f1e79c0 -> x56361f1e79f0
+  x56361f1e79f0 [label = "f"]
+  x56361f1e79c0 -> x56361f1e7a40
+  x56361f1e7a40 [label = "5"]
+  x56361f1e79c0 -> x56361f1e7dc0
+  x56361f1e7dc0 [label = "="]
+  x56361f1e7dc0 -> x56361f1e7df0
+  x56361f1e7df0 [label = "a"]
+  x56361f1e7dc0 -> x56361f1e7d70
+  x56361f1e7d70 [label = "+"]
+  x56361f1e7d70 -> x56361f1e7c90
+  x56361f1e7c90 [label = "0"]
+  x56361f1e7d70 -> x56361f1e7d40
+  x56361f1e7d40 [label = "5"]
+  x56361f1e7dc0 -> x56361f1e8230
+  x56361f1e8230 [label = "="]
+  x56361f1e8230 -> x56361f1e8260
+  x56361f1e8260 [label = "s"]
+  x56361f1e8230 -> x56361f1e81e0
+  x56361f1e81e0 [label = "+"]
+  x56361f1e81e0 -> x56361f1e7f00
+  x56361f1e7f00 [label = "2"]
+  x56361f1e81e0 -> x56361f1e8190
+  x56361f1e8190 [label = "-"]
+  x56361f1e8190 -> x56361f1e7fb0
+  x56361f1e7fb0 [label = "5"]
+  x56361f1e8190 -> x56361f1e8140
+  x56361f1e8140 [label = "+"]
+  x56361f1e8140 -> x56361f1e80a0
+  x56361f1e80a0 [label = "s"]
+  x56361f1e8140 -> x56361f1e8110
+  x56361f1e8110 [label = "4"]
+  x56361f1e8230 -> x56361f1e8850
+  x56361f1e8850 [label = "="]
+  x56361f1e8850 -> x56361f1e8880
+  x56361f1e8880 [label = "s"]
+  x56361f1e8850 -> x56361f1e8800
+  x56361f1e8800 [label = "+"]
+  x56361f1e8800 -> x56361f1e8370
+  x56361f1e8370 [label = "6"]
+  x56361f1e8800 -> x56361f1e87b0
+  x56361f1e87b0 [label = "-"]
+  x56361f1e87b0 -> x56361f1e8420
+  x56361f1e8420 [label = "3"]
+  x56361f1e87b0 -> x56361f1e8760
+  x56361f1e8760 [label = "+"]
+  x56361f1e8760 -> x56361f1e8660
+  x56361f1e8660 [label = "d"]
+  x56361f1e8660 -> x56361f1e8510
+  x56361f1e8510 [label = "s"]
+  x56361f1e8510 -> x56361f1e8580
+  x56361f1e8580 [label = "v"]
+  x56361f1e8580 -> x56361f1e85f0
+  x56361f1e85f0 [label = "f"]
+  x56361f1e8760 -> x56361f1e8730
+  x56361f1e8730 [label = "5"]
+  x56361f1e8850 -> x56361f1e8980
+  x56361f1e8980 [label = "return"]
+  x56361f1e8980 -> x56361f1e8950
+  x56361f1e8950 [label = "9"]
+  x56361f1e89d0 -> x56361f1e8ae0
+  x56361f1e8ae0 [label = "g"]
 }
