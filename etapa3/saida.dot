@@ -1,87 +1,137 @@
 # Executado assim: ./output2dot.sh 
 # https://graphviz.org/doc/info/lang.html
 digraph {
-  x56361f1e89d0 [label = "f"]
-  x56361f1e89d0 -> x56361f1e7570
-  x56361f1e7570 [label = "a"]
-  x56361f1e7570 -> x56361f1e7520
-  x56361f1e7520 [label = "b"]
-  x56361f1e7520 -> x56361f1e74f0
-  x56361f1e74f0 [label = "c"]
-  x56361f1e89d0 -> x56361f1e7b20
-  x56361f1e7b20 [label = "<="]
-  x56361f1e7b20 -> x56361f1e7b50
-  x56361f1e7b50 [label = "c"]
-  x56361f1e7b20 -> x56361f1e7ba0
-  x56361f1e7ba0 [label = "3"]
-  x56361f1e7b20 -> x56361f1e7a70
-  x56361f1e7a70 [label = "<="]
-  x56361f1e7a70 -> x56361f1e7aa0
-  x56361f1e7aa0 [label = "e"]
-  x56361f1e7a70 -> x56361f1e7af0
-  x56361f1e7af0 [label = "4"]
-  x56361f1e7a70 -> x56361f1e79c0
-  x56361f1e79c0 [label = "<="]
-  x56361f1e79c0 -> x56361f1e79f0
-  x56361f1e79f0 [label = "f"]
-  x56361f1e79c0 -> x56361f1e7a40
-  x56361f1e7a40 [label = "5"]
-  x56361f1e79c0 -> x56361f1e7dc0
-  x56361f1e7dc0 [label = "="]
-  x56361f1e7dc0 -> x56361f1e7df0
-  x56361f1e7df0 [label = "a"]
-  x56361f1e7dc0 -> x56361f1e7d70
-  x56361f1e7d70 [label = "+"]
-  x56361f1e7d70 -> x56361f1e7c90
-  x56361f1e7c90 [label = "0"]
-  x56361f1e7d70 -> x56361f1e7d40
-  x56361f1e7d40 [label = "5"]
-  x56361f1e7dc0 -> x56361f1e8230
-  x56361f1e8230 [label = "="]
-  x56361f1e8230 -> x56361f1e8260
-  x56361f1e8260 [label = "s"]
-  x56361f1e8230 -> x56361f1e81e0
-  x56361f1e81e0 [label = "+"]
-  x56361f1e81e0 -> x56361f1e7f00
-  x56361f1e7f00 [label = "2"]
-  x56361f1e81e0 -> x56361f1e8190
-  x56361f1e8190 [label = "-"]
-  x56361f1e8190 -> x56361f1e7fb0
-  x56361f1e7fb0 [label = "5"]
-  x56361f1e8190 -> x56361f1e8140
-  x56361f1e8140 [label = "+"]
-  x56361f1e8140 -> x56361f1e80a0
-  x56361f1e80a0 [label = "s"]
-  x56361f1e8140 -> x56361f1e8110
-  x56361f1e8110 [label = "4"]
-  x56361f1e8230 -> x56361f1e8850
-  x56361f1e8850 [label = "="]
-  x56361f1e8850 -> x56361f1e8880
-  x56361f1e8880 [label = "s"]
-  x56361f1e8850 -> x56361f1e8800
-  x56361f1e8800 [label = "+"]
-  x56361f1e8800 -> x56361f1e8370
-  x56361f1e8370 [label = "6"]
-  x56361f1e8800 -> x56361f1e87b0
-  x56361f1e87b0 [label = "-"]
-  x56361f1e87b0 -> x56361f1e8420
-  x56361f1e8420 [label = "3"]
-  x56361f1e87b0 -> x56361f1e8760
-  x56361f1e8760 [label = "+"]
-  x56361f1e8760 -> x56361f1e8660
-  x56361f1e8660 [label = "d"]
-  x56361f1e8660 -> x56361f1e8510
-  x56361f1e8510 [label = "s"]
-  x56361f1e8510 -> x56361f1e8580
-  x56361f1e8580 [label = "v"]
-  x56361f1e8580 -> x56361f1e85f0
-  x56361f1e85f0 [label = "f"]
-  x56361f1e8760 -> x56361f1e8730
-  x56361f1e8730 [label = "5"]
-  x56361f1e8850 -> x56361f1e8980
-  x56361f1e8980 [label = "return"]
-  x56361f1e8980 -> x56361f1e8950
-  x56361f1e8950 [label = "9"]
-  x56361f1e89d0 -> x56361f1e8ae0
-  x56361f1e8ae0 [label = "g"]
+  x556e47a949d0 [label = "f"]
+  x556e47a949d0 -> x556e47a93570
+  x556e47a93570 [label = "a"]
+  x556e47a93570 -> x556e47a93520
+  x556e47a93520 [label = "b"]
+  x556e47a93520 -> x556e47a934f0
+  x556e47a934f0 [label = "c"]
+  x556e47a949d0 -> x556e47a93b20
+  x556e47a93b20 [label = "<="]
+  x556e47a93b20 -> x556e47a93b50
+  x556e47a93b50 [label = "c"]
+  x556e47a93b20 -> x556e47a93ba0
+  x556e47a93ba0 [label = "3"]
+  x556e47a93b20 -> x556e47a93a70
+  x556e47a93a70 [label = "<="]
+  x556e47a93a70 -> x556e47a93aa0
+  x556e47a93aa0 [label = "e"]
+  x556e47a93a70 -> x556e47a93af0
+  x556e47a93af0 [label = "4"]
+  x556e47a93a70 -> x556e47a939c0
+  x556e47a939c0 [label = "<="]
+  x556e47a939c0 -> x556e47a939f0
+  x556e47a939f0 [label = "f"]
+  x556e47a939c0 -> x556e47a93a40
+  x556e47a93a40 [label = "5"]
+  x556e47a939c0 -> x556e47a93dc0
+  x556e47a93dc0 [label = "="]
+  x556e47a93dc0 -> x556e47a93df0
+  x556e47a93df0 [label = "a"]
+  x556e47a93dc0 -> x556e47a93d70
+  x556e47a93d70 [label = "+"]
+  x556e47a93d70 -> x556e47a93c90
+  x556e47a93c90 [label = "0"]
+  x556e47a93d70 -> x556e47a93d40
+  x556e47a93d40 [label = "5"]
+  x556e47a93dc0 -> x556e47a94230
+  x556e47a94230 [label = "="]
+  x556e47a94230 -> x556e47a94260
+  x556e47a94260 [label = "s"]
+  x556e47a94230 -> x556e47a941e0
+  x556e47a941e0 [label = "+"]
+  x556e47a941e0 -> x556e47a93f00
+  x556e47a93f00 [label = "2"]
+  x556e47a941e0 -> x556e47a94190
+  x556e47a94190 [label = "-"]
+  x556e47a94190 -> x556e47a93fb0
+  x556e47a93fb0 [label = "5"]
+  x556e47a94190 -> x556e47a94140
+  x556e47a94140 [label = "+"]
+  x556e47a94140 -> x556e47a940a0
+  x556e47a940a0 [label = "s"]
+  x556e47a94140 -> x556e47a94110
+  x556e47a94110 [label = "4"]
+  x556e47a94230 -> x556e47a94850
+  x556e47a94850 [label = "="]
+  x556e47a94850 -> x556e47a94880
+  x556e47a94880 [label = "s"]
+  x556e47a94850 -> x556e47a94800
+  x556e47a94800 [label = "+"]
+  x556e47a94800 -> x556e47a94370
+  x556e47a94370 [label = "6"]
+  x556e47a94800 -> x556e47a947b0
+  x556e47a947b0 [label = "-"]
+  x556e47a947b0 -> x556e47a94420
+  x556e47a94420 [label = "3"]
+  x556e47a947b0 -> x556e47a94760
+  x556e47a94760 [label = "+"]
+  x556e47a94760 -> x556e47a94660
+  x556e47a94660 [label = "d"]
+  x556e47a94660 -> x556e47a94510
+  x556e47a94510 [label = "s"]
+  x556e47a94510 -> x556e47a94580
+  x556e47a94580 [label = "v"]
+  x556e47a94580 -> x556e47a945f0
+  x556e47a945f0 [label = "f"]
+  x556e47a94760 -> x556e47a94730
+  x556e47a94730 [label = "5"]
+  x556e47a94850 -> x556e47a94980
+  x556e47a94980 [label = "return"]
+  x556e47a94980 -> x556e47a94950
+  x556e47a94950 [label = "9"]
+  x556e47a949d0 -> x556e47a95760
+  x556e47a95760 [label = "g"]
+  x556e47a95760 -> x556e47a94e40
+  x556e47a94e40 [label = "if"]
+  x556e47a94e40 -> x556e47a94c40
+  x556e47a94c40 [label = "=="]
+  x556e47a94c40 -> x556e47a94ba0
+  x556e47a94ba0 [label = "x"]
+  x556e47a94c40 -> x556e47a94c10
+  x556e47a94c10 [label = "2"]
+  x556e47a94e40 -> x556e47a94d80
+  x556e47a94d80 [label = "="]
+  x556e47a94d80 -> x556e47a94db0
+  x556e47a94db0 [label = "s"]
+  x556e47a94d80 -> x556e47a94d50
+  x556e47a94d50 [label = "1"]
+  x556e47a94e40 -> x556e47a95320
+  x556e47a95320 [label = "if"]
+  x556e47a95320 -> x556e47a94fb0
+  x556e47a94fb0 [label = "=="]
+  x556e47a94fb0 -> x556e47a94f10
+  x556e47a94f10 [label = "x"]
+  x556e47a94fb0 -> x556e47a94f80
+  x556e47a94f80 [label = "2"]
+  x556e47a95320 -> x556e47a950f0
+  x556e47a950f0 [label = "="]
+  x556e47a950f0 -> x556e47a95120
+  x556e47a95120 [label = "s"]
+  x556e47a950f0 -> x556e47a950c0
+  x556e47a950c0 [label = "1"]
+  x556e47a95320 -> x556e47a95370
+  x556e47a95370 [label = "else"]
+  x556e47a95370 -> x556e47a952a0
+  x556e47a952a0 [label = "="]
+  x556e47a952a0 -> x556e47a952d0
+  x556e47a952d0 [label = "s"]
+  x556e47a952a0 -> x556e47a95270
+  x556e47a95270 [label = "2"]
+  x556e47a95320 -> x556e47a956e0
+  x556e47a956e0 [label = "while"]
+  x556e47a956e0 -> x556e47a95520
+  x556e47a95520 [label = "=="]
+  x556e47a95520 -> x556e47a95480
+  x556e47a95480 [label = "x"]
+  x556e47a95520 -> x556e47a954f0
+  x556e47a954f0 [label = "2"]
+  x556e47a956e0 -> x556e47a95660
+  x556e47a95660 [label = "="]
+  x556e47a95660 -> x556e47a95690
+  x556e47a95690 [label = "s"]
+  x556e47a95660 -> x556e47a95630
+  x556e47a95630 [label = "1"]
 }

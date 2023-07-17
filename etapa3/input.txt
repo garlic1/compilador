@@ -2,10 +2,13 @@ f( int a, int b, int c ) -> int {
   int j, a, b, c <= 3, d, e <= 4, f <= 5;
   a=0+5;
   s=2+5-s+4;
-  s=6+3-d(s,v,f)+5;
+  s=6+3-d(s,v,f)+5;  
   return 9;
 }
 
 g() -> int {
+  if(x == 2) { s = 1; }
+  if(x == 2) { s = 1; } else { s = 2; }
+  while(x == 2) { s = 1; }
 
 }

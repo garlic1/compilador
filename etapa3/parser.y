@@ -32,6 +32,7 @@ extern void *arvore;
 %type<arvore> value
 %type<arvore> paramFunBloco
 %type<arvore> listExpr
+%type<arvore> cmd_fluxo
 
 
 %type<valor_lexico> literal
@@ -111,10 +112,10 @@ bloco: '{' lcmd '}' { $$ = $2; };
 
 escopo: bloco ';' { $$ = $1; };
 
-lcmd: cmd ';' lcmd { if($1 == NULL){$$ = $3;}else{$$ = $1; asd_add_child_end($$, $3);}}
-    | cmd_fluxo lcmd
-    | cmd_fluxo ';' lcmd
-    | escopo lcmd
+lcmd: cmd ';' lcmd          { if($1 == NULL){$$ = $3;}else{$$ = $1; asd_add_child_end($$, $3);}}
+    | cmd_fluxo lcmd        { $$ =  $1; asd_add_child_end($$, $2);}
+    | cmd_fluxo ';' lcmd    { $$ =  $1; asd_add_child_end($$, $3);}
+    | escopo lcmd           { $$ =  $1; asd_add_child_end($$, $2);}
     | {$$ = NULL;};
 
 cmd: tipo listID_ATTR { $$ = $2;}
@@ -122,9 +123,9 @@ cmd: tipo listID_ATTR { $$ = $2;}
     | TK_IDENTIFICADOR '(' paramFunBloco ')' { $$ =  asd_new($1); asd_add_child($$, $3);}
     | TK_PR_RETURN expr  { $$ = asd_new($1); asd_add_child($$, $2);}; 
 
-cmd_fluxo: TK_PR_IF '(' expr ')' bloco
-         | TK_PR_IF '(' expr ')' bloco TK_PR_ELSE bloco
-         | TK_PR_WHILE '(' expr ')' bloco;
+cmd_fluxo: TK_PR_IF '(' expr ')' bloco                      { $$ = asd_new($1); asd_add_child($$, $3); asd_add_child($$, $5); }
+         | TK_PR_IF '(' expr ')' bloco TK_PR_ELSE bloco     { $$ = asd_new($1); asd_add_child($$, $3); asd_add_child($$, $5); asd_tree *son = asd_new($6); asd_add_child($$, son); asd_add_child(son, $7);}
+         | TK_PR_WHILE '(' expr ')' bloco                   { $$ = asd_new($1); asd_add_child($$, $3); asd_add_child($$, $5);};
 
 listID_ATTR: TK_IDENTIFICADOR TK_OC_LE literal ',' listID_ATTR { $$ = asd_new($2); asd_add_child($$, asd_new($1)); asd_add_child($$, asd_new($3)); asd_add_child($$, $5); }
            |TK_IDENTIFICADOR TK_OC_LE literal                  { $$ = asd_new($2); asd_add_child($$, asd_new($1)); asd_add_child($$, asd_new($3)); }
