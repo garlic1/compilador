@@ -1,0 +1,6 @@
+int var;
+fun (float k, int l) -> float
+{
+  int a;
+}
+int vet;
