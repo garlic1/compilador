@@ -7,12 +7,11 @@
 #define IDENTIFICADOR      4
 #define LITERAL            5
 
-typedef struct data_t
-{
+typedef struct data_t {
   int tipo;
   int line_number;
   char *valor_token;
-
+  int tipoNodo;
 } data;
 
 
