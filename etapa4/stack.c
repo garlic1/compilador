@@ -1,6 +1,6 @@
 #include "stack.h"
 
-void push(table_node* new_table) {
+void push(pointer_table_node* new_table) {
     if (is_full()) {
         printf("TABLE STACK FULL, ABORTING PUSH");
         return;
@@ -10,19 +10,19 @@ void push(table_node* new_table) {
     return;
 };
 
-table_node* pop() {
+pointer_table_node* pop() {
     if (is_empty()) {
         printf("UNDERFLOW IN TABLE STACK, ABORTING POP");
         return NULL;
     }
 
-    table_node* table = stack[top_index];
+    pointer_table_node* table = stack[top_index];
     top_index--;
     return table;
 };
 
-table_node* peek() {
-    if (is_empty()){
+pointer_table_node* peek() {
+    if (is_empty()) {
         printf("TRYING TO ACCESS EMPTY TABLE STACK");
         return NULL;
     }

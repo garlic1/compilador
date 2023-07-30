@@ -24,16 +24,23 @@ typedef struct node_content_t {
     char* valor_token;
 } node_content;
 
-typedef struct table_node_t {
+typedef struct pointer_table_node_t {
     int key;
     node_content node_content;
-    table_node *next_node;
-} table_node;
+    pointer_table_node *next_node;
+} pointer_table_node;
 
-table_node* cria_lista(void);
+pointer_table_node* cria_lista(void);
 
-table_node* insere_inicio();
-table_node* insere_fim();
-table_node* insere_meio();
+pointer_table_node* insere_inicio(
+    pointer_table_node* new_nodo,
+    int row,
+    int column,
+    bool is_literal,
+    bool is_identifier,
+    bool is_function,
+    char* type,
+    char* valor_token
+);
 
-table_node* free_table();
+pointer_table_node* free_table(pointer_table_node* pointer_lista);
