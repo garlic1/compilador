@@ -3,6 +3,7 @@
 void push(pointer_table_node* new_table) {
     if (is_full()) {
         printf("TABLE STACK FULL, ABORTING PUSH");
+
         return;
     }
     top_index++;
@@ -21,12 +22,12 @@ pointer_table_node* pop() {
     return table;
 };
 
-pointer_table_node* peek() {
+pointer_table_node* peek(int index) {
     if (is_empty()) {
         printf("TRYING TO ACCESS EMPTY TABLE STACK");
         return NULL;
     }
-    return stack[top_index];
+    return stack[index];
 };
 
 bool is_empty() {
