@@ -11,7 +11,7 @@ typedef struct data_t {
   int tipo;
   int line_number;
   char *valor_token;
-  int tipoNodo;
+  int tipo_inferido;
 } data;
 
 

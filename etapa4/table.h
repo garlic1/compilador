@@ -1,14 +1,15 @@
 #include "semantics.h"
 
-typedef struct pointer_table_node_t {
+typedef struct pointer_table_node_t pointer_table_node;
+struct pointer_table_node_t {
     int key;
     node_content node_content;
-    pointer_table_node *next_node;
-} pointer_table_node;
+    pointer_table_node* next_node;
+};
 
 pointer_table_node* cria_lista(void);
 
-pointer_table_node* insere_inicio(
+pointer_table_node* insere(
     pointer_table_node* new_nodo,
     int row,
     int column,

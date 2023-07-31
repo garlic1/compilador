@@ -1,4 +1,3 @@
-#include "semantics.h"
 #include "table.h"
 #include "ast.h"
 
@@ -8,7 +7,7 @@ pointer_table_node* cria_lista() {
     return NULL;
 }
 
-pointer_table_node* insere_inicio(
+pointer_table_node* insere(
     pointer_table_node* pointer_lista,
     int row,
     int column,
@@ -36,7 +35,7 @@ pointer_table_node* insere_inicio(
 }
 
 pointer_table_node* free_table(pointer_table_node* pointer_lista){
-    pointer_table_node *aux;
+    pointer_table_node* aux;
 
     while(pointer_lista != NULL) {
         aux = pointer_lista;
