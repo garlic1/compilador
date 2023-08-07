@@ -10,7 +10,6 @@ pointer_table_node* cria_lista() {
 pointer_table_node* insere(
     pointer_table_node* pointer_lista,
     int row,
-    int column,
     bool is_literal,
     bool is_identifier,
     bool is_function,
@@ -20,8 +19,7 @@ pointer_table_node* insere(
     pointer_table_node* new_nodo;
     new_nodo = (pointer_table_node*) malloc(sizeof(pointer_table_node));
     
-    new_nodo -> node_content.node_location.row = row;
-    new_nodo -> node_content.node_location.column = column;
+    new_nodo -> node_content.row = row;
     new_nodo -> node_content.node_nature.is_literal = is_literal;
     new_nodo -> node_content.node_nature.is_identifier=is_identifier;
     new_nodo -> node_content.node_nature.is_function=is_function;

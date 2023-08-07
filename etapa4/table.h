@@ -12,7 +12,6 @@ pointer_table_node* cria_lista(void);
 pointer_table_node* insere(
     pointer_table_node* new_nodo,
     int row,
-    int column,
     bool is_literal,
     bool is_identifier,
     bool is_function,

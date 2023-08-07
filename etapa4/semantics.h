@@ -7,11 +7,6 @@
 #define ERR_VARIABLE 20 //2.3
 #define ERR_FUNCTION 21 //2.3
 
-typedef struct node_location_t {
-    int row;
-    int column;
-} node_location;
-
 typedef struct node_nature_t {
     bool is_literal;
     bool is_identifier;
@@ -19,7 +14,7 @@ typedef struct node_nature_t {
 } node_nature;
 
 typedef struct node_content_t {
-    node_location node_location;
+    int row;
     node_nature node_nature;
     char* type;
     char* valor_token;
