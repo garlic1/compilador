@@ -7,11 +7,17 @@
 #define IDENTIFICADOR      4
 #define LITERAL            5
 
-typedef struct data_t {
+#define INTEIRO 1
+#define PONTOFLUTUANTE 2
+#define BOOLEANO 3
+
+typedef struct data_t
+{
   int tipo;
-  int line_number;
-  char *valor_token;
   int tipo_inferido;
+  int line_number;
+  char *valor_token; 
+
 } data;
 
 
@@ -24,7 +30,15 @@ typedef struct asd_tree_t {
 /*
  * Função new_data, cria uma struct com os dados.
  */
-data *new_data(const char *newlabel, int newNumberLine, int tipo);
+data *new_data(const char *newlabel, int newNumberLine, int newTipo);
+/*
+ * Função new_data, cria uma struct com os dados.
+ */
+data *new_data_typed(const char *newlabel, int newNumberLine, int newTipo, int newTipo_Inferido);
+/*
+ * Função setType, altera um tipo de um nó.
+ */
+void setType(data *dados, int newTipo_Inferido);
 /*
  * Função asd_new, cria um nó sem filhos com o label informado.
  */

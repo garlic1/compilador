@@ -16,8 +16,8 @@
 "while"             { yylval.valor_lexico = new_data(yytext, yylineno, PALAVRA_RESERVADA); return TK_PR_WHILE;}
 "return"            { yylval.valor_lexico = new_data(yytext, yylineno, PALAVRA_RESERVADA); return TK_PR_RETURN;}
 
-[0-9]+              { yylval.valor_lexico = new_data(yytext, yylineno, LITERAL); return TK_LIT_INT;}
-[0-9]*"."[0-9]+     { yylval.valor_lexico = new_data(yytext, yylineno, LITERAL); return TK_LIT_FLOAT;}
+[0-9]+              { yylval.valor_lexico = new_data_typed(yytext, yylineno, LITERAL, INTEIRO); return TK_LIT_INT;}
+[0-9]*"."[0-9]+     { yylval.valor_lexico = new_data_typed(yytext, yylineno, LITERAL, PONTOFLUTUANTE); return TK_LIT_FLOAT;}
 
 [\{\}(),;]          { return (int)yytext[0]; }
 
@@ -31,8 +31,8 @@
 
 [<>!*/%+\-=]        { yylval.valor_lexico = new_data(yytext, yylineno, CARACTERE_ESPECIAL); return (int)yytext[0];}
 
-"false"             { yylval.valor_lexico = new_data(yytext, yylineno, LITERAL); return TK_LIT_FALSE;}
-"true"              { yylval.valor_lexico = new_data(yytext, yylineno, LITERAL); return TK_LIT_TRUE;}
+"false"             { yylval.valor_lexico = new_data_typed(yytext, yylineno, LITERAL, BOOLEANO); return TK_LIT_FALSE;}
+"true"              { yylval.valor_lexico = new_data_typed(yytext, yylineno, LITERAL, BOOLEANO); return TK_LIT_TRUE;}
 
 [_a-z][_a-zA-Z0-9]* { yylval.valor_lexico = new_data(yytext, yylineno, IDENTIFICADOR); return TK_IDENTIFICADOR; }
 

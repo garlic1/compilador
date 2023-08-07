@@ -16,8 +16,14 @@ void exporta(asd_tree *tree)
   if (tree == NULL){
     return;
   }else{
-    printf("%p [label = \"%s\"]\n", tree, tree->token.valor_token);
-    //printf("%p [label = \"%s\", %d, %d]\n", tree, tree->token.valor_token, tree->token.line_number, tree->token.tipo);
+    if(tree->token.tipo_inferido > 0)
+    {
+      printf("%p [label = \"%s (%d, %d, %d) \"]\n", tree, tree->token.valor_token, tree->token.line_number, tree->token.tipo, tree->token.tipo_inferido);
+    }else
+    {
+      printf("%p [label = \"%s (%d, %d) \"]\n", tree, tree->token.valor_token, tree->token.line_number, tree->token.tipo);
+      //printf("%p [label = \"%s\", %d, %d]\n", tree, tree->token.valor_token, tree->token.line_number, tree->token.tipo);
+    } 
     for(int i = 0; i < tree->number_of_children; i++)
     {
         printf("%p, %p\n", tree, tree->children[i]);        

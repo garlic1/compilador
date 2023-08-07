@@ -34,8 +34,8 @@ extern void *arvore;
 %type<arvore> listExpr
 %type<arvore> cmd_fluxo
 
-
 %type<valor_lexico> literal
+%type<valor_lexico> tipo
 
 
 %token<valor_lexico> TK_PR_INT
@@ -86,27 +86,27 @@ ldecl: global_var ldecl { $$ = $2; }
      | global_var       { $$ = NULL; }
      | fun              { $$ = $1; };
 
-tipo: TK_PR_INT
-    | TK_PR_FLOAT
-    | TK_PR_BOOL;
+tipo: TK_PR_INT { $$ = 1; }
+    | TK_PR_FLOAT { $$ = 2; }
+    | TK_PR_BOOL { $$ = 3; };
 
 literal: TK_LIT_TRUE    { $$ = $1; }
         |TK_LIT_FALSE   { $$ = $1; }
         |TK_LIT_INT     { $$ = $1; }
         |TK_LIT_FLOAT   { $$ = $1; };
 
-global_var: tipo listID ';' ;
+global_var: tipo listID ';';
 
 listID: TK_IDENTIFICADOR ',' listID
         | TK_IDENTIFICADOR;
 
-fun: TK_IDENTIFICADOR '(' paramFun ')' TK_OC_MAP tipo bloco { $$ = asd_new($1); asd_add_child($$, $3); asd_add_child($$, $7); };
+fun: TK_IDENTIFICADOR '(' paramFun ')' TK_OC_MAP tipo bloco { $$ = asd_new($1); setType($$, $6); asd_add_child($$, $3); asd_add_child($$, $7); };
 
 paramFun: listParamFun { $$ = $1; }
         | { $$ = NULL; };
 
-listParamFun: tipo TK_IDENTIFICADOR ',' listParamFun { $$ = asd_new($2); asd_add_child($$, $4); }
-            | tipo TK_IDENTIFICADOR { $$ = asd_new($2); };
+listParamFun: tipo TK_IDENTIFICADOR ',' listParamFun { $$ = asd_new($2); setType($$, $1); asd_add_child($$, $4); }
+            | tipo TK_IDENTIFICADOR { $$ = asd_new($2); setType($$, $1); };
 
 bloco: '{' lcmd '}' { $$ = $2; };
 

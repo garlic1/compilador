@@ -11,8 +11,29 @@ data *new_data(const char *newlabel, int newNumberLine, int newTipo)
     dados->tipo = newTipo;
     dados->line_number = newNumberLine;
     dados->valor_token = strdup(newlabel);
+    dados->tipo_inferido = -1;
   }
   return dados;  
+}
+
+data *new_data_typed(const char *newlabel, int newNumberLine, int newTipo, int newTipo_Inferido)
+{
+  data *dados = NULL;
+  dados = calloc(1, sizeof(data));
+  if (dados != NULL){
+    dados->tipo = newTipo;
+    dados->line_number = newNumberLine;
+    dados->valor_token = strdup(newlabel);
+    dados->tipo_inferido = newTipo_Inferido;
+  }
+  return dados;  
+}
+
+void setType(data *dados, int newTipo_Inferido)
+{
+  if (dados != NULL){
+    dados->tipo_inferido = newTipo_Inferido;
+  }
 }
 
 asd_tree *asd_new(data *dados)
