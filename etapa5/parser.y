@@ -100,7 +100,7 @@ global_var: tipo listID ';' ;
 listID: TK_IDENTIFICADOR ',' listID
         | TK_IDENTIFICADOR;
 
-fun: TK_IDENTIFICADOR '(' paramFun ')' TK_OC_MAP tipo bloco { $$ = asd_new($1); asd_add_child($$, $3); asd_add_child($$, $7); };
+fun: TK_IDENTIFICADOR '(' paramFun ')' TK_OC_MAP tipo bloco { $$ = asd_new($1); /*asd_add_child($$, $3);*/ asd_add_child($$, $7); };
 
 paramFun: listParamFun { $$ = $1; }
         | { $$ = NULL; };

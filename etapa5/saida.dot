@@ -1,39 +1,27 @@
 # Executado assim: ./output2dot.sh 
 # https://graphviz.org/doc/info/lang.html
 digraph {
-  x5566461fc640 [label = "g"]
-  x5566461fc640 -> x5566461fc570
-  x5566461fc570 [label = "i"]
-  x5566461fc570 -> x5566461fc520
-  x5566461fc520 [label = "j"]
-  x5566461fc520 -> x5566461fc4f0
-  x5566461fc4f0 [label = "k"]
-  x5566461fc640 -> x5566461fcf60
-  x5566461fcf60 [label = "f"]
-  x5566461fcf60 -> x5566461fc9c0
-  x5566461fc9c0 [label = "="]
-  x5566461fc9c0 -> x5566461fc9f0
-  x5566461fc9f0 [label = "a"]
-  x5566461fc9c0 -> x5566461fc990
-  x5566461fc990 [label = "1"]
-  x5566461fc9c0 -> x5566461fcb30
-  x5566461fcb30 [label = "="]
-  x5566461fcb30 -> x5566461fcb60
-  x5566461fcb60 [label = "b"]
-  x5566461fcb30 -> x5566461fcb00
-  x5566461fcb00 [label = "2"]
-  x5566461fcb30 -> x5566461fcca0
-  x5566461fcca0 [label = "="]
-  x5566461fcca0 -> x5566461fccd0
-  x5566461fccd0 [label = "c"]
-  x5566461fcca0 -> x5566461fcc70
-  x5566461fcc70 [label = "3"]
-  x5566461fcca0 -> x5566461fcef0
-  x5566461fcef0 [label = "call g"]
-  x5566461fcef0 -> x5566461fcda0
-  x5566461fcda0 [label = "a"]
-  x5566461fcda0 -> x5566461fce10
-  x5566461fce10 [label = "b"]
-  x5566461fce10 -> x5566461fce80
-  x5566461fce80 [label = "c"]
+  x55d818ade960 [label = "f"]
+  x55d818ade960 -> x55d818ade8e0
+  x55d818ade8e0 [label = "="]
+  x55d818ade8e0 -> x55d818ade910
+  x55d818ade910 [label = "z"]
+  x55d818ade8e0 -> x55d818ade890
+  x55d818ade890 [label = "+"]
+  x55d818ade890 -> x55d818ade4f0
+  x55d818ade4f0 [label = "a"]
+  x55d818ade890 -> x55d818ade840
+  x55d818ade840 [label = "*"]
+  x55d818ade840 -> x55d818ade5a0
+  x55d818ade5a0 [label = "b"]
+  x55d818ade840 -> x55d818ade7f0
+  x55d818ade7f0 [label = "+"]
+  x55d818ade7f0 -> x55d818ade650
+  x55d818ade650 [label = "c"]
+  x55d818ade7f0 -> x55d818ade7a0
+  x55d818ade7a0 [label = "*"]
+  x55d818ade7a0 -> x55d818ade700
+  x55d818ade700 [label = "d"]
+  x55d818ade7a0 -> x55d818ade770
+  x55d818ade770 [label = "e"]
 }
