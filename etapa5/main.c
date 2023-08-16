@@ -28,6 +28,8 @@ void exporta(asd_tree *tree)
 
 int main (int argc, char **argv)
 {
+
+
   int ret = yyparse();
   exporta (arvore);
   yylex_destroy();

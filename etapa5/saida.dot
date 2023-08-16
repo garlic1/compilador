@@ -1,27 +1,4 @@
 # Executado assim: ./output2dot.sh 
 # https://graphviz.org/doc/info/lang.html
 digraph {
-  x55d818ade960 [label = "f"]
-  x55d818ade960 -> x55d818ade8e0
-  x55d818ade8e0 [label = "="]
-  x55d818ade8e0 -> x55d818ade910
-  x55d818ade910 [label = "z"]
-  x55d818ade8e0 -> x55d818ade890
-  x55d818ade890 [label = "+"]
-  x55d818ade890 -> x55d818ade4f0
-  x55d818ade4f0 [label = "a"]
-  x55d818ade890 -> x55d818ade840
-  x55d818ade840 [label = "*"]
-  x55d818ade840 -> x55d818ade5a0
-  x55d818ade5a0 [label = "b"]
-  x55d818ade840 -> x55d818ade7f0
-  x55d818ade7f0 [label = "+"]
-  x55d818ade7f0 -> x55d818ade650
-  x55d818ade650 [label = "c"]
-  x55d818ade7f0 -> x55d818ade7a0
-  x55d818ade7a0 [label = "*"]
-  x55d818ade7a0 -> x55d818ade700
-  x55d818ade700 [label = "d"]
-  x55d818ade7a0 -> x55d818ade770
-  x55d818ade770 [label = "e"]
 }

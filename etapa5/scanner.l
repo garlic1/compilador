@@ -8,6 +8,11 @@
 %x COMMENT
 %%
 
+"/*"                {BEGIN(COMMENT);}
+<COMMENT>\n         { yylineno = yylineno; }
+<COMMENT>.          {/* ignore */}
+<COMMENT>"*/"       {BEGIN(INITIAL);}
+
 "int"               { yylval.valor_lexico = new_data(yytext, yylineno, PALAVRA_RESERVADA); return TK_PR_INT;}
 "float"             { yylval.valor_lexico = new_data(yytext, yylineno, PALAVRA_RESERVADA); return TK_PR_FLOAT;}
 "bool"              { yylval.valor_lexico = new_data(yytext, yylineno, PALAVRA_RESERVADA); return TK_PR_BOOL;}
@@ -36,10 +41,7 @@
 
 [_a-z][_a-zA-Z0-9]* { yylval.valor_lexico = new_data(yytext, yylineno, IDENTIFICADOR); return TK_IDENTIFICADOR; }
 
-"/*"                {BEGIN(COMMENT);}
-<COMMENT>\n         {yylineno++;}
-<COMMENT>.          {/* ignore */}
-<COMMENT>"*/"       {BEGIN(INITIAL);}
+
 
 "//".*              {/* ignore */}
 

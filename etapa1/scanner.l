@@ -34,7 +34,7 @@
 ("_"|[a-z])+        {return TK_IDENTIFICADOR;}
 
 "/*"                {BEGIN(COMMENT);}
-<COMMENT>\n         {yylineno++;}
+<COMMENT>\n         {yylineno = yylineno;}
 <COMMENT>.          {/* ignore */}
 <COMMENT>"*/"       {BEGIN(INITIAL);}
 
