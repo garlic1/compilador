@@ -19,7 +19,6 @@ extern void *arvore;
 
 %type<arvore> program
 %type<arvore> ldecl
-%type<arvore> listID
 %type<arvore> fun
 %type<arvore> paramFun
 %type<arvore> listParamFun
@@ -69,6 +68,9 @@ extern void *arvore;
 %token<valor_lexico> '+'
 %token<valor_lexico> '<'
 %token<valor_lexico> '>'
+
+%type<valor_lexico> bin_op
+%type<valor_lexico> u_op
 
 
 %token TK_ERRO
@@ -138,27 +140,32 @@ paramFunBloco: listExpr { $$ = $1; }
 listExpr: expr ',' listExpr { $$ = $1; asd_add_child($$, $3); }
         | expr { $$ = $1; };
 
-expr: '(' expr ')'              { $$ = $2; }
-    | '-' expr                  { $$ = asd_new($1); asd_add_child($$, $2); }
-    | '!' expr                  { $$ = asd_new($1); asd_add_child($$, $2); }
-    | value '*' expr            { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
-    | value '/' expr            { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
-    | value '%' expr            { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
-    | value '+' expr            { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
-    | value '-' expr            { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
-    | value '<' expr            { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
-    | value '>' expr            { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
-    | value TK_OC_LE expr       { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
-    | value TK_OC_GE expr       { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
-    | value TK_OC_EQ expr       { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
-    | value TK_OC_NE expr       { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
-    | value TK_OC_AND expr      { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
-    | value TK_OC_OR expr       { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }
-    | value                     { $$ =  $1;};       
+expr: u_op expr          { $$ = asd_new($1); asd_add_child($$, $2); }    
+    | value bin_op expr   { $$ = asd_new($2); asd_add_child($$, $1); asd_add_child($$, $3); }    
+    | value                     { $$ =  $1;};
 
-value: TK_IDENTIFICADOR { $$ =  asd_new($1);}
+bin_op: '*' { $$ = $1; }
+            | '/' { $$ = $1; }
+            | '%' { $$ = $1; }
+            | '+' { $$ = $1; }
+            | '-' { $$ = $1; }
+            | '<' { $$ = $1; }
+            | '>' { $$ = $1; }
+            | TK_OC_LE  { $$ = $1; }
+            | TK_OC_GE  { $$ = $1; }
+            | TK_OC_EQ  { $$ = $1; }
+            | TK_OC_NE  { $$ = $1; }
+            | TK_OC_AND { $$ = $1; }
+            | TK_OC_OR  { $$ = $1; };
+
+u_op: '-'  { $$ = $1; }
+                 | '!' { $$ = $1; };
+
+
+value: TK_IDENTIFICADOR { $$ = asd_new($1);}
     | TK_IDENTIFICADOR '(' paramFunBloco ')' { $$ =  asd_new_call($1); asd_add_child($$, $3);}
-    | literal { $$ =  asd_new($1);};
+    | literal { $$ =  asd_new($1);}
+    | '(' expr ')' { $$ = $2; };
 
 
 %%

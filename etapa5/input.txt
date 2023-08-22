@@ -1,1 +1,5 @@
-222.
+g(int i, int j, int k)->int{
+}
+f()->int{
+    a = b + c + d + e;
+}

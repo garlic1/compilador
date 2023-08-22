@@ -381,11 +381,11 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[76] =
     {   0,
-        0,    0,    0,    0,   32,   30,   29,   27,   28,   22,
-       22,   19,   14,   22,   30,   22,   12,   22,   22,   22,
-       25,   25,   25,   25,   25,   25,   25,   25,   20,    3,
-        2,    3,   18,   21,   13,    1,   26,    0,   12,   15,
-       17,   16,   25,   25,   25,   25,   25,    8,   25,   25,
+        0,    0,    0,    0,   32,   30,   29,   27,   28,   15,
+       15,   20,   14,   15,   30,   15,   12,   15,   15,   15,
+       25,   25,   25,   25,   25,   25,   25,   25,   21,    3,
+        2,    3,   19,   22,   13,    1,   26,    0,   12,   16,
+       18,   17,   25,   25,   25,   25,   25,    8,   25,   25,
        25,   25,    4,   26,   25,   25,   25,   25,    5,   25,
        25,   25,    7,    9,   25,   25,   25,   24,   25,   23,
         6,   25,   10,   11,    0
@@ -814,7 +814,7 @@ case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
 #line 12 "scanner.l"
-{ yylineno = yylineno; }
+{yylineno = yylineno;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
@@ -878,88 +878,88 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 29 "scanner.l"
-{ yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_LE;}
+#line 28 "scanner.l"
+{ yylval.valor_lexico = new_data(yytext, yylineno, CARACTERE_ESPECIAL); return (int)yytext[0];}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 30 "scanner.l"
-{ yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_GE;}
+{ yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_LE;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 31 "scanner.l"
-{ yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_EQ;}
+{ yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_GE;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 32 "scanner.l"
-{  yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_NE;}
+{ yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_EQ;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 33 "scanner.l"
-{  yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_AND;}
+{  yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_NE;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 34 "scanner.l"
-{  yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_OR;}
+{  yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_AND;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 35 "scanner.l"
-{  yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_MAP;}
+{  yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_OR;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 37 "scanner.l"
-{ yylval.valor_lexico = new_data(yytext, yylineno, CARACTERE_ESPECIAL); return (int)yytext[0];}
+#line 36 "scanner.l"
+{  yylval.valor_lexico = new_data(yytext, yylineno, OPERADOR_COMPOSTO); return TK_OC_MAP;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 39 "scanner.l"
+#line 38 "scanner.l"
 { yylval.valor_lexico = new_data(yytext, yylineno, LITERAL); return TK_LIT_FALSE;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 40 "scanner.l"
+#line 39 "scanner.l"
 { yylval.valor_lexico = new_data(yytext, yylineno, LITERAL); return TK_LIT_TRUE;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 42 "scanner.l"
+#line 41 "scanner.l"
 { yylval.valor_lexico = new_data(yytext, yylineno, IDENTIFICADOR); return TK_IDENTIFICADOR; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 46 "scanner.l"
+#line 44 "scanner.l"
 {/* ignore */}
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
-#line 48 "scanner.l"
+#line 46 "scanner.l"
 {/* ignore */}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 49 "scanner.l"
+#line 47 "scanner.l"
 {/* ignore */}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 50 "scanner.l"
+#line 48 "scanner.l"
 {/* ignore */}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 52 "scanner.l"
+#line 50 "scanner.l"
 {return TK_ERRO;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 54 "scanner.l"
+#line 52 "scanner.l"
 ECHO;
 	YY_BREAK
 #line 966 "lex.yy.c"
@@ -1980,7 +1980,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 54 "scanner.l"
+#line 52 "scanner.l"
 
 
 
