@@ -10,41 +10,56 @@
 typedef struct data_t
 {
   int tipo;
+  int *precedencia;
   int line_number;
   char *valor_token;
 
 } data;
 
 
-typedef struct asd_tree_t {  
+typedef struct ast_tree_t {  
   data token;
   int number_of_children;
-  struct asd_tree_t **children;
-} asd_tree;
+  struct ast_tree_t **children;
+} ast_tree;
 
 /*
  * Função new_data, cria uma struct com os dados.
  */
 data *new_data(const char *newlabel, int newNumberLine, int tipo);
 /*
- * Função asd_new, cria um nó sem filhos com o label informado.
+ * Função ast_new, cria um nó sem filhos com o label informado.
  */
-asd_tree *asd_new(data *dados);
+ast_tree *ast_new(data *dados);
 /*
- * Função asd_new, cria um nó sem filhos com o label informado.
+ * Função ast_new, cria um nó sem filhos com o label informado.
  */
-asd_tree *asd_new_call(data *dados);
+ast_tree *ast_new_call(data *dados);
 /*
- * Função asd_add_child, adiciona child como filho de tree.
+ * Função cria um nodo para reconhecer o parenteses.
  */
-void asd_add_child(asd_tree *tree, asd_tree *child);
+ast_tree *ast_new_parenteses();
 /*
- * Função asd_add_child_end, adiciona child como filho do ultimo filho.
+ * Função ast_add_child, adiciona child como filho de tree.
  */
-void asd_add_child_end(asd_tree *tree, asd_tree *child);
+void ast_add_child(ast_tree *tree, ast_tree *child);
 /*
- * Função asd_tree, libera recursivamente o nó e seus filhos.
+ * Função ast_add_child_first, adiciona child como primeiro filho.
  */
-void asd_free(asd_tree *tree);
+void ast_add_child_first(ast_tree *tree, ast_tree *child);
+/*
+ * Função ast_add_child_end, adiciona child como filho do ultimo filho.
+ */
+void ast_add_child_end(ast_tree *tree, ast_tree *child);
+/*
+ * Função ast_adjust_expr, ajusta as prioridades das expressoes.
+ */
+ast_tree *ast_adjust_expr(ast_tree *tree);
+/*
+ * Função ast_tree, libera recursivamente o nó e seus filhos.
+ */
+void ast_free(ast_tree *tree);
+
+void ast_node_free(ast_tree *tree);
 
 #endif

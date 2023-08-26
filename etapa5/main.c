@@ -11,13 +11,15 @@ extern int yylex_destroy(void);
 
 void *arvore = NULL;
 
-void exporta(asd_tree *tree)
+void exporta(ast_tree *tree)
 {
   if (tree == NULL){
     return;
   }else{
-    printf("%p [label = \"%s\"]\n", tree, tree->token.valor_token);
+    if(tree->token.precedencia == NULL) printf("%p [label = \"%s\"]\n", tree, tree->token.valor_token);
+    else printf("%p [label = \"%s\n%d\"]\n", tree, tree->token.valor_token, *(tree->token.precedencia));
     //printf("%p [label = \"%s\", %d, %d]\n", tree, tree->token.valor_token, tree->token.line_number, tree->token.tipo);
+    //printf("%p [label = \"%s\"]\n", tree, tree->token.valor_token);
     for(int i = 0; i < tree->number_of_children; i++)
     {
         printf("%p, %p\n", tree, tree->children[i]);        

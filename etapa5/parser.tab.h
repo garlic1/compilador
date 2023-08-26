@@ -90,7 +90,7 @@ union YYSTYPE
 #line 15 "parser.y"
 
     data *valor_lexico;
-    asd_tree *arvore;
+    ast_tree *arvore;
 
 #line 96 "parser.tab.h"
 
