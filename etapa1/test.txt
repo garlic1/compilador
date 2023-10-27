@@ -1,0 +1,36 @@
+int aasdasd123asdasd = 0;
+int 32as12312312dasaasdas123123 = 2.5;
+2.50000 22.5 .0 12312313.3
+print
+code
+float
+sexo
+'a'
+'0'
+'.'
+'fiz sexo ontem'
+
+-
+,
+;
+(
+
+
+)
+[
+    ]
+    {
+
+
+ 
+    }
+    =
+    +
+    *
+    /
+    %
+    <
+    >
+    &
+    |
+    ~
