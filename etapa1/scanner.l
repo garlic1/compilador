@@ -1,7 +1,12 @@
+/*
+    Gabriel Lima Chimifosk - Compiladores - 2023/2
+*/
+
 %option yylineno
 
 %{
     #include "tokens.h"
+    #include "hash.c"
     int running = 1;
 %}
 
@@ -27,19 +32,28 @@
 "=="        {return OPERATOR_EQ;}
 "!="        {return OPERATOR_DIF;}
 
-[a-zA-Z_][a-zA-Z_0-9]* {return TK_IDENTIFIER;}
+"///"               {BEGIN(COMMENT);}
+<COMMENT>"\\\\\\"   {BEGIN(INITIAL);}
+<COMMENT>"\n"       {yylineno++;}
+<COMMENT>.          {/* nop */}
 
-[0-9]+"."[0-9]+ {return LIT_REAL;}
-[0-9]+      {return LIT_INT;}
-"'"."'"     {return LIT_CHAR;}
+[0-9]+"."[0-9]+ {insert_node(yytext, LIT_REAL); return LIT_REAL;}
+[0-9]+          {insert_node(yytext, LIT_INT); return LIT_INT;}
+"'"."'"         {insert_node(yytext, LIT_CHAR); return LIT_CHAR;}
+"\""([^"\n]|"\\\"")*"\""      {insert_node(yytext, LIT_STRING); return LIT_STRING;}
 
-\n          {/* nop */}
-" "         {/* nop */}
-\t          {/* nop */}
+[a-zA-Z_0-9]* {insert_node(yytext, TK_IDENTIFIER); return TK_IDENTIFIER;}
+
+\n           {/* nop */}
+" "          {/* nop */}
+\t           {/* nop */}
+"//".*       {/* nop */}
 
 .           {return TOKEN_ERROR;}
 
 %%
+
+#include "main.c"
 
 int yywrap() {
     running = 0;
@@ -54,4 +68,6 @@ int isRunning() {
     return running;
 }
 
-#include "main.c"
+void initMe(void) {
+  init_table();
+}

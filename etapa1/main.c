@@ -1,14 +1,13 @@
 int main(void)
 {
-    FILE *infile = fopen("test.txt", "r");
-    yyin = infile;
+    FILE *test = fopen("test.txt", "r");
+    yyin = test;
 
-    /* inicialização da tabela de símbolos */
-    // initMe();
+    // init functions
+    initMe();
 
-    /* laço que utiliza o analisador léxico */
+    // lex analyzer
     int token;
-    printf("\nanálise léxica ----------------------------------------\n\n");
     while (isRunning())
     {
         /* o teste pula o caractere de fim de arquivo */
@@ -43,10 +42,10 @@ int main(void)
             }
         }
     }
-    fclose(infile);
+    fclose(test);
     printf("\nline_count: %d\n", getLineNumber());
 
     /* impressão da tabela de símbolos */
-    // print_table();
+    print_table();
     return 0;
 }
