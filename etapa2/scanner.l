@@ -5,8 +5,8 @@
 %option yylineno
 
 %{
-    #include "tokens.h"
     #include "hash.c"
+    #include "parser.tab.h"
     int running = 1;
 %}
 
@@ -34,7 +34,7 @@
 
 "///"               {BEGIN(COMMENT);}
 <COMMENT>"\\\\\\"   {BEGIN(INITIAL);}
-<COMMENT>"\n"       {yylineno++;}
+<COMMENT>"\n"       {/* nop */}
 <COMMENT>.          {/* nop */}
 
 [0-9]+"."[0-9]+ {insert_node(yytext, LIT_REAL); return LIT_REAL;}
@@ -53,8 +53,6 @@
 
 %%
 
-#include "main.c"
-
 int yywrap() {
     running = 0;
     return 1;
@@ -71,3 +69,5 @@ int isRunning() {
 void initMe(void) {
   init_table();
 }
+
+#include "main.c"

@@ -8,7 +8,7 @@
 #
 
 etapa2: parser.tab.o lex.yy.o
-	gcc -o etapa2 lex.yy.o parser.tab.o -lfl
+	gcc -o etapa2 lex.yy.o parser.tab.o -lfl -Wall
 
 parser.tab.o lex.yy.o : parser.tab.c lex.yy.c
 	gcc -c parser.tab.c lex.yy.c
@@ -21,3 +21,6 @@ parser.tab.c: parser.y
 
 clean:
 	rm lex.yy.c etapa2 parser.tab.c parser.tab.h *.o
+
+build: clean
+		tar cvzf etapa2.tgz .

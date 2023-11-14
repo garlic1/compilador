@@ -1,3 +1,13 @@
+%{
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int yylex(void);
+    int yyerror();
+    extern int getLineNumber();
+%}
+
+
 %token KW_CHAR
 %token KW_INT
 %token KW_FLOAT
@@ -22,23 +32,30 @@
 %token LIT_CHAR
 %token LIT_STRING
 
+%token TOKEN_ERROR
+
 %left '+' '-'
 %left '*' '/'
 %left '|' '&'
 %left '~'
 %left '<' '>' OPERATOR_LE OPERATOR_GE OPERATOR_EQ OPERATOR_DIF 
 
+%precedence "then"
+%precedence KW_ELSE
+
 %%
 
-program: declaration_list;
+program: global_list functions_list
+    ;
 
-declaration_list: global_variable declaration_list
-    | function_prototype declaration_list
-    | function_implementation declaration_list
+// GLOBAL VARIABLES
+
+global_list: global global_list
+    | function_prototype global_list
     |
     ;
 
-global_variable: type TK_IDENTIFIER '=' single_value ';'
+global: type TK_IDENTIFIER '=' single_value ';'
     | vector_declaration
     ;
 
@@ -49,11 +66,6 @@ vector_initial_values: LIT_INT int_recursion
     | LIT_CHAR char_recursion
     | LIT_REAL real_recursion
     | single_value
-    ;
-
-single_value: LIT_INT
-    | LIT_CHAR
-    | LIT_REAL
     ;
 
 int_recursion: LIT_INT int_recursion
@@ -68,15 +80,9 @@ real_recursion: LIT_REAL real_recursion
     | LIT_REAL
     ;
 
-type: KW_CHAR
-    | KW_INT
-    | KW_FLOAT
-    ;
+// FUNCTION PROTOTYPES
 
 function_prototype: type TK_IDENTIFIER '(' parameter_list ')' ';'
-    ;
-
-function_implementation: KW_CODE TK_IDENTIFIER block
     ;
 
 parameter_list: parameter ',' parameter_list
@@ -84,28 +90,47 @@ parameter_list: parameter ',' parameter_list
     |
     ;
 
-parameter: type TK_IDENTIFIER;
+parameter: type TK_IDENTIFIER
+    ;
+
+// FUNCTIONS
+
+functions_list: function functions_list
+    |
+    ;
+
+function: KW_CODE TK_IDENTIFIER command
+    ;
+   
+command: flow_control
+    | expr
+    | simple_command
+    | block
+    |
+    ;
 
 block: '{' commands_chain '}'
     ;
 
-commands_chain: simple_command commands_chain
-    | arithmetic_expression commands_chain
-    | flux_control commands_chain
-    ;
-
-flux_control: KW_IF '(' expr ')' commands_chain
-    | KW_IF '(' expr ')' commands_chain KW_ELSE commands_chain
-    | KW_WHILE '(' expr ')' commands_chain
-    ;
-
-arithmetic_expression: expr ';'
-    ;
-
-simple_command: attribution ';'
-    | print_command ';'
-    | return_command ';'
+commands_chain: command ';' commands_chain
     |
+    ;
+
+// FLOW CONTROL
+
+flow_control: KW_IF '(' expr ')' command    %prec "then"
+    | KW_IF '(' expr ')' command KW_ELSE command
+    | KW_WHILE '(' expr ')' command
+    ;
+
+// SIMPLE COMMANDS
+
+simple_command: attribution
+    | print_command
+    | return_command
+    ;
+
+return_command: KW_RETURN expr
     ;
 
 print_command: KW_PRINT print_value
@@ -115,13 +140,11 @@ print_value: LIT_STRING
     | expr
     ;
 
-
-return_command: KW_RETURN expr
-    ;
-
 attribution: TK_IDENTIFIER '=' expr
     | TK_IDENTIFIER '[' expr ']' '=' expr
     ;
+
+// EXPRESSIONS
 
 expr: TK_IDENTIFIER
     | TK_IDENTIFIER '[' expr ']'
@@ -148,10 +171,22 @@ expr_list: expr ',' expr_list
     | expr
     ;
 
+// TYPES AND LITS
+
+type: KW_CHAR
+    | KW_INT
+    | KW_FLOAT
+    ;
+
+single_value: LIT_INT
+    | LIT_CHAR
+    | LIT_REAL
+    ;
+
 %%
 
 int yyerror() {
     int line_number = getLineNumber();
-    printf("Syntax error at line %d.", line_number);
+    printf("Syntax error at line %d.\n", line_number);
     exit(3);
 }
