@@ -1,0 +1,58 @@
+int aasdasd123asdasd = 0;
+int 32as12312312dasaasdas123123 = 2.5;
+2.50000 22.5 .0 12312313.3
+123
+12321
+"string"
+" \" "
+
+string"
+print
+code
+float
+'a'
+'0'
+'.'
+'fiz o trabalho'
+
+-
+,
+;
+(
+
+
+)
+[
+    ]
+    {
+
+
+ 
+    }
+    =
+    +
+    *
+    /
+    %
+    <
+    >
+    &
+    |
+    ~
+// comentario 
+
+fiz = "trabalho";
+    ///
+
+    awfejwao9fhjiuawoe
+    awefiokmjnawme
+    awermkojlpgawerko´,
+    rgtdbfhsp´lkroth´k
+
+    kprhtj
+    pk´rhtk
+    ódrht
+    pko´rshpo´
+    kprhtj
+
+    \\\

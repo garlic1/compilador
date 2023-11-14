@@ -1,0 +1,51 @@
+int main(void)
+{
+    FILE *test = fopen("test.txt", "r");
+    yyin = test;
+
+    // init functions
+    initMe();
+
+    // lex analyzer
+    int token;
+    while (isRunning())
+    {
+        /* o teste pula o caractere de fim de arquivo */
+        token = yylex();
+        if (isRunning() != 0)
+        {
+            switch (token)
+            {
+                case 256: printf("KW_CHAR\n");                   break;
+                case 257: printf("KW_INT\n");                    break;
+                case 258: printf("KW_FLOAT\n");                  break;
+                case 260: printf("KW_CODE\n");                   break;
+                case 261: printf("KW_IF\n");                     break;
+                case 262: printf("KW_THEN\n");                   break;
+                case 263: printf("KW_ELSE\n");                   break;
+                case 264: printf("KW_WHILE\n");                  break;
+                case 265: printf("KW_GOTO\n");                   break;
+                case 266: printf("KW_READ\n");                   break;
+                case 267: printf("KW_PRINT\n");                  break;
+                case 268: printf("KW_RETURN\n");                 break;
+                case 270: printf("OPERATOR_LE\n");               break;
+                case 271: printf("OPERATOR_GE\n");               break;
+                case 272: printf("OPERATOR_EQ\n");               break;
+                case 273: printf("OPERATOR_DIF\n");              break;
+                case 280: printf("TK_IDENTIFIER: %s\n", yytext); break;
+                case 281: printf("LIT_INTEGER: %s\n", yytext);   break;
+                case 282: printf("LIT_REAL: %s\n", yytext);      break;
+                case 285: printf("LIT_CHAR: %s\n", yytext);      break;
+                case 286: printf("LIT_STRING: %s\n", yytext);    break;
+                case 290: printf("TOKEN_ERROR: %s\n", yytext);   break;
+                default:  printf("SPECIAL_CHAR: %s\n", yytext);
+            }
+        }
+    }
+    fclose(test);
+    printf("\nline_count: %d\n", getLineNumber());
+
+    /* impressão da tabela de símbolos */
+    print_table();
+    return 0;
+}
