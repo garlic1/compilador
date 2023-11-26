@@ -7,8 +7,17 @@
 # and #include "main.c" in the last part of the scanner.l
 #
 
-etapa2: parser.tab.o lex.yy.o
-	gcc -o etapa2 lex.yy.o parser.tab.o -lfl -Wall
+etapa3: main.o parser.tab.o lex.yy.o hash.o ast.o
+	gcc -o etapa3 main.o hash.o lex.yy.o parser.tab.o -lfl -Wall
+
+main.o: main.c
+	gcc -c main.c
+
+hash.o: hash.c
+	gcc -c hash.c
+
+ast.o: ast.c
+	gcc -c ast.c
 
 parser.tab.o lex.yy.o : parser.tab.c lex.yy.c
 	gcc -c parser.tab.c lex.yy.c
@@ -20,7 +29,7 @@ parser.tab.c: parser.y
 	bison -d parser.y
 
 clean:
-	rm lex.yy.c etapa2 parser.tab.c parser.tab.h *.o
+	rm lex.yy.c etapa3 parser.tab.c parser.tab.h *.o
 
 build: clean
-		tar cvzf etapa2.tgz .
+		tar cvzf etapa3.tgz .

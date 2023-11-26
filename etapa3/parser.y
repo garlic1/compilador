@@ -1,12 +1,16 @@
 %{
-    #include <stdio.h>
-    #include <stdlib.h>
+    #include "ast.h"
+    #include "hash.h"
 
     int yylex(void);
     int yyerror();
     extern int getLineNumber();
 %}
 
+%union {
+    hash_node *symbol;
+    AST *ast;
+}
 
 %token KW_CHAR
 %token KW_INT

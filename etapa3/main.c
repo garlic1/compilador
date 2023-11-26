@@ -1,9 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "hash.h"
+#include "ast.h"
+
 extern FILE *yyin;
+int yyparse();
+void initMe();
+int getLineNumber();
+ 
 
 int main(int argc, char **argv)
 {
     if (argc < 2) {
-        printf("Usage: ./etapa2 test.txt\n");
+        printf("Usage: ./etapa3 test.txt\n");
         exit(1);
     }
 

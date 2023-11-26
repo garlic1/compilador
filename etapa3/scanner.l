@@ -5,7 +5,8 @@
 %option yylineno
 
 %{
-    #include "hash.c"
+    #include "hash.h"
+    #include "ast.h"
     #include "parser.tab.h"
     int running = 1;
 %}
@@ -69,5 +70,3 @@ int isRunning() {
 void initMe(void) {
   init_table();
 }
-
-#include "main.c"
