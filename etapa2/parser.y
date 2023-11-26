@@ -40,8 +40,8 @@
 %left '~'
 %left '<' '>' OPERATOR_LE OPERATOR_GE OPERATOR_EQ OPERATOR_DIF 
 
-%precedence "then"
-%precedence KW_ELSE
+%left "then"
+%left KW_ELSE
 
 %%
 
