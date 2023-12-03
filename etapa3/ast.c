@@ -13,6 +13,29 @@ AST* ast_create(int type, hash_node* symbol, AST* child_0, AST* child_1, AST* ch
     return node;
 }
 
-AST* ast_print(AST* tree, int level) {
+void ast_print(AST* node, int level) {
 
+    if (node == NULL) {
+        return;
+    }
+
+    for (int i = 0; i < level; i++) {
+        fprintf(stderr, "\t");
+    }
+    fprintf(stderr, "ast(");
+    switch (node -> type) {
+        // case AST_SYMBOL:
+        //     fprintf(stderr, "AST_SYMBOL"); 
+        //     break;
+        // case AST_ADD:
+        //     fprintf(stderr, "AST_ADD"); 
+        //     break;
+        // case AST_SUB:
+        //     fprintf(stderr, "AST_SUB"); 
+        //     break;
+        // default:
+        //     fprintf(stderr, "AST_UNKNOWN"); 
+        //     break;
+    }
+    fprintf(stderr, ")\n");
 }

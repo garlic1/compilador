@@ -7,7 +7,6 @@ extern FILE *yyin;
 int yyparse();
 void initMe();
 int getLineNumber();
- 
 
 int main(int argc, char **argv)
 {

@@ -12,9 +12,9 @@
     AST *ast;
 }
 
-%token KW_CHAR
-%token KW_INT
-%token KW_FLOAT
+%token<symbol> KW_CHAR
+%token<symbol> KW_INT
+%token<symbol> KW_FLOAT
 %token KW_CODE
 
 %token KW_IF
@@ -29,14 +29,38 @@
 %token OPERATOR_EQ
 %token OPERATOR_DIF
 
-%token TK_IDENTIFIER
+%token<symbol> TK_IDENTIFIER
 
-%token LIT_INT
-%token LIT_REAL
-%token LIT_CHAR
-%token LIT_STRING
+%token<symbol> LIT_INT
+%token<symbol> LIT_REAL
+%token<symbol> LIT_CHAR
+%token<symbol> LIT_STRING
 
 %token TOKEN_ERROR
+
+// %type<ast> program
+// %type<ast> global_list
+// %type<ast> functions_list
+// %type<ast> vector_declaration
+// %type<ast> vector_initial_values
+// %type<ast> int_recursion
+// %type<ast> char_recursion
+// %type<ast> real_recursion
+// %type<ast> function_prototype
+// %type<ast> parameter_list
+// %type<ast> parameter
+// %type<ast> function
+// %type<ast> command
+// %type<ast> block
+// %type<ast> commands_chain
+// %type<ast> flow_control
+// %type<ast> simple_command
+// %type<ast> return_command
+// %type<ast> print_command
+// %type<ast> print_value
+// %type<ast> attribution
+%type<ast> expr
+// %type<ast> expr_list
 
 %left '+' '-'
 %left '*' '/'
@@ -150,11 +174,11 @@ attribution: TK_IDENTIFIER '=' expr
 
 // EXPRESSIONS
 
-expr: TK_IDENTIFIER
-    | TK_IDENTIFIER '[' expr ']'
+expr: TK_IDENTIFIER     
+    | TK_IDENTIFIER '[' expr ']' 
     | single_value
     | '(' expr ')'
-    | expr '+' expr 
+    | expr '+' expr { fprintf(stderr, "Recebi %s %s\n ", $1, $3); }
     | expr '-' expr 
     | expr '*' expr 
     | expr '/' expr 
