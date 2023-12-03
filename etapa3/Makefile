@@ -8,7 +8,7 @@
 #
 
 etapa3: main.o parser.tab.o lex.yy.o hash.o ast.o
-	gcc -o etapa3 main.o hash.o lex.yy.o parser.tab.o -lfl -Wall
+	gcc -o etapa3 main.o lex.yy.o parser.tab.o hash.o ast.o -lfl -Wall
 
 main.o: main.c
 	gcc -c main.c
