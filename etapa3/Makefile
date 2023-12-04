@@ -31,5 +31,7 @@ parser.tab.c: parser.y
 clean:
 	rm lex.yy.c etapa3 parser.tab.c parser.tab.h *.o
 
+remake: clean etapa3
+
 build: clean
 		tar cvzf etapa3.tgz .

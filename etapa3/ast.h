@@ -28,6 +28,26 @@
 #define AST_CHAR 21
 #define AST_FLOAT 22
 
+#define AST_BLOCK 23
+#define AST_COMMANDS_CHAIN 24
+#define AST_FUNCTION_LIST 25
+#define AST_VECTOR_DECLARATION 26
+#define AST_EXPR_LIST 27
+#define AST_FUNCTION_PROTOTYPE 28
+#define AST_PARAMETER_LIST 29
+#define AST_PARAMETER 30
+
+#define AST_IF 31
+#define AST_IF_ELSE 32
+#define AST_WHILE 33
+
+#define AST_ATTR 34
+#define AST_ATTR_VECTOR 35
+
+#define AST_RETURN 36
+#define AST_PRINT 37
+#define AST_PRINT_VALUE 38
+
 typedef struct ast_node {
     int type;
     hash_node* symbol;

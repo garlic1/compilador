@@ -90,15 +90,63 @@ void ast_print(AST* node, int level) {
         case AST_FLOAT:
             fprintf(stderr, "AST_FLOAT");
             break;
+        case AST_BLOCK:
+            fprintf(stderr, "AST_BLOCK");
+            break;
+        case AST_COMMANDS_CHAIN:
+            fprintf(stderr, "AST_COMMANDS_CHAIN");
+            break;
+        case AST_FUNCTION_LIST:
+            fprintf(stderr, "AST_FUNCTION_LIST");
+            break;
+        case AST_VECTOR_DECLARATION:
+            fprintf(stderr, "AST_VECTOR_DECLARATION");
+            break;
+        case AST_EXPR_LIST:
+            fprintf(stderr, "AST_EXPR_LIST");
+            break;
+        case AST_FUNCTION_PROTOTYPE:
+            fprintf(stderr, "AST_FUNCTION_PROTOTYPE");
+            break;
+        case AST_PARAMETER_LIST:
+            fprintf(stderr, "AST_PARAMETER_LIST");
+            break;
+        case AST_PARAMETER:
+            fprintf(stderr, "AST_PARAMETER");
+            break;
+        case AST_IF:
+            fprintf(stderr, "AST_IF");
+            break;
+        case AST_IF_ELSE:
+            fprintf(stderr, "AST_IF_ELSE");
+            break;
+        case AST_WHILE:
+            fprintf(stderr, "AST_WHILE");
+            break;
+        case AST_ATTR:
+            fprintf(stderr, "AST_ATTR");
+            break;
+        case AST_ATTR_VECTOR:
+            fprintf(stderr, "AST_ATTR_VECTOR");
+            break;
+        case AST_RETURN:
+            fprintf(stderr, "AST_RETURN");
+            break;
+        case AST_PRINT:
+            fprintf(stderr, "AST_PRINT");
+            break;
+        case AST_PRINT_VALUE:
+            fprintf(stderr, "AST_PRINT_VALUE");
+            break;
         default:
             fprintf(stderr, "AST_UNKNOWN"); 
             break;
     }
     fprintf(stderr, ")\n");
+
      if(node->symbol!=0)
         fprintf(stderr, ",%s \n", node->symbol->value);
-    else
-        // fprintf(stderr, ",0\n");
+
     for(int i=0; i<MAX_CHILDREN; i++)
         ast_print(node->children[i], level + 1);
 }
@@ -106,9 +154,21 @@ void ast_print(AST* node, int level) {
 // fazer mais simples primeiro -> soma, subtraçao etc
 // complicados -> vetor, attr, recursoes, 
 void ast_decomp (AST *node) {
-    if (!node) return;
-	
+    if (!node) {
+        return;
+    } 
+
 	switch (node -> type) {
+        case AST_GLOBAL_LIST:
+            fprintf(stderr, "data = {\n");
+            ast_decomp(node->children[0]);
+            fprintf(stderr, "}\n");
+            break;
+        case AST_GLOBAL_VARIABLE:
+            ast_decomp(node->children[0]);
+            if (node->children[1]) {
+                ast_decomp(node->children[1]);
+            }
 		case AST_SYMBOL:
 			fprintf(stderr,"%s",node->symbol->value);
 			break;
@@ -117,6 +177,9 @@ void ast_decomp (AST *node) {
 			fprintf(stderr, " + ");
 			ast_decomp(node->children[1]);
 			break;
+        case AST_INT: 
+            fprintf(stderr, "int");
+            break;
         default:
             break;
     }

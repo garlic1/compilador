@@ -24,7 +24,7 @@ int main(int argc, char **argv)
     
     initMe();
     yyparse();
-    print_table();
+    // print_table();
     ast_decomp(ast_root);
 
     exit(0);

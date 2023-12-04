@@ -77,7 +77,7 @@
 
 %%
 
-program: global_list functions_list {ast_print($1, 0);ast_decomp($1);ast_print($2, 0);ast_decomp($2);}
+program: global_list functions_list {ast_print($1, 0);ast_print($2, 0);ast_decomp($2);}
     ;
 
 // GLOBAL VARIABLES
@@ -114,45 +114,45 @@ real_recursion: LIT_REAL real_recursion {}
 
 // FUNCTION PROTOTYPES
 
-function_prototype: type TK_IDENTIFIER '(' parameter_list ')' ';'   {}
+function_prototype: type TK_IDENTIFIER '(' parameter_list ')' ';'   { $$ = ast_create(AST_FUNCTION_PROTOTYPE, $2, $1, $4, 0, 0); }
     ;
 
-parameter_list: parameter ',' parameter_list    {}
-    | parameter {}
+parameter_list: parameter ',' parameter_list    { $$ = ast_create(AST_PARAMETER_LIST, 0, $1, $3, 0, 0); }
+    | parameter { $$ = ast_create(AST_PARAMETER_LIST, 0, $1, 0, 0, 0); }
     | { $$=0; }
     ;
 
-parameter: type TK_IDENTIFIER   {}
+parameter: type TK_IDENTIFIER   { $$ = ast_create(AST_PARAMETER, $2, $1, 0, 0, 0); }
     ;
 
 // FUNCTIONS
 
-functions_list: function functions_list {}
+functions_list: function functions_list { $$ = ast_create(AST_FUNCTION_LIST, 0, $1, $2, 0, 0); }
     |   { $$ = 0; }
     ;
 
-function: KW_CODE TK_IDENTIFIER command {}
+function: KW_CODE TK_IDENTIFIER command { $$ = ast_create(AST_ACCESS_FUNCTION, $2, $3, 0, 0, 0); }
     ;
    
-command: flow_control
-    | expr  {}
+command: flow_control 
+    | expr  
     | simple_command
     | block
     |       { $$ = 0; }
     ;
 
-block: '{' commands_chain '}' {}
+block: '{' commands_chain '}' { $$ = ast_create(AST_BLOCK, 0, $2, 0, 0, 0); }
     ;
 
-commands_chain: command ';' commands_chain {}
+commands_chain: command ';' commands_chain { $$ = ast_create(AST_COMMANDS_CHAIN, 0, $1, $3, 0, 0); }
     |   { $$ = 0; }
     ;
 
 // FLOW CONTROL
 
-flow_control: KW_IF '(' expr ')' command    %prec "then" {}
-    | KW_IF '(' expr ')' command KW_ELSE command {}
-    | KW_WHILE '(' expr ')' command {}
+flow_control: KW_IF '(' expr ')' command    %prec "then" { $$ = ast_create(AST_IF, 0, $3, $5, 0, 0); }
+    | KW_IF '(' expr ')' command KW_ELSE command { $$ = ast_create(AST_IF_ELSE, 0, $3, $5, $7, 0); }
+    | KW_WHILE '(' expr ')' command { $$ = ast_create(AST_WHILE, 0, $3, $5, 0, 0); }
     ;
 
 // SIMPLE COMMANDS
@@ -162,18 +162,19 @@ simple_command: attribution { $$=$1; }
     | return_command { $$=$1; }
     ;
 
-return_command: KW_RETURN expr {}
+// revisar return
+return_command: KW_RETURN expr { $$ = ast_create(AST_RETURN, 0, $2, 0, 0, 0); }
     ;
 
-print_command: KW_PRINT print_value {}
+print_command: KW_PRINT print_value { $$ = ast_create(AST_PRINT, 0, $2, 0, 0, 0); }
     ;
 
-print_value: LIT_STRING {}  
-    | expr              {}
+print_value: LIT_STRING { $$ = ast_create(AST_PRINT_VALUE, 0, 0, 0, 0, 0); }  
+    | expr              { $$ = ast_create(AST_PRINT_VALUE, 0, $1, 0, 0, 0); }
     ;
 
-attribution: TK_IDENTIFIER '=' expr {}
-    | TK_IDENTIFIER '[' expr ']' '=' expr {}
+attribution: TK_IDENTIFIER '=' expr { $$ = ast_create(AST_ATTR, $1, $3, 0, 0, 0); }
+    | TK_IDENTIFIER '[' expr ']' '=' expr { $$ = ast_create(AST_ATTR_VECTOR, $1, $3, $6, 0, 0); }
     ;
 
 // EXPRESSIONS
@@ -199,8 +200,8 @@ expr: TK_IDENTIFIER {$$ = ast_create(AST_SYMBOL, $1, 0, 0, 0, 0);}
     | KW_INPUT {$$ = ast_create(AST_INPUT, 0, 0, 0, 0, 0);}
     ;
 
-expr_list: expr ',' expr_list   {}
-    | expr {}
+expr_list: expr ',' expr_list   { $$ = ast_create(AST_EXPR_LIST, 0, $1, $3, 0, 0); }
+    | expr { $$ = ast_create(AST_EXPR_LIST, 0, $1, 0, 0, 0); }
     ;
 
 // TYPES AND LITS
