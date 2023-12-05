@@ -6,7 +6,7 @@
 extern FILE *yyin;
 FILE *out;
 int yyparse();
-extern void initMe();
+void initMe();
 int getLineNumber();
 
 int main(int argc, char **argv)

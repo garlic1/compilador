@@ -193,9 +193,6 @@ void ast_decomp (AST *node) {
 			fprintf(out, " - ");
 			ast_decomp(node->children[1]);
             break;
-        case AST_ACCESS_VECTOR:
-            fprintf(out, "AST_ACCESS_VECTOR");
-            break;
         case AST_MUL:
             ast_decomp(node->children[0]);
 			fprintf(out, " * ");
@@ -285,6 +282,7 @@ void ast_decomp (AST *node) {
                 ast_decomp(node->children[1]);
             break;
         case AST_FUNCTION_LIST:
+            fprintf(out, "\n");
             ast_decomp(node->children[0]);
             fprintf(out, "\n");
             if(node->children[1])
@@ -360,13 +358,33 @@ void ast_decomp (AST *node) {
             }
             break;
         case AST_VECTOR_DECLARATION:
-            fprintf(out, "AST_VECTOR_DECLARATION");
+            ast_decomp(node->children[0]);
+            fprintf(out, "%s[", node->symbol->value);
+            ast_decomp(node->children[1]);
+            fprintf(out, "]");
+            if (node->children[2]) {
+                ast_decomp(node->children[2]);
+            }
+            fprintf(out, ";\n");
             break;
         case AST_VECTOR_INTIIAL_VALUES: 
-            fprintf(out, "AST_VECTOR_INTIIAL_VALUES");
+            ast_decomp(node->children[0]);
+            if (out, node->children[1]) {
+                fprintf(out, " ");
+                ast_decomp(node->children[1]);
+            }
+            break;
+        case AST_ACCESS_VECTOR:
+            fprintf(out, "%s [", node->symbol->value);
+            ast_decomp(node->children[0]);
+            fprintf(out, "]");
             break;
         case AST_ATTR_VECTOR:
-            fprintf(out, "AST_ATTR_VECTOR");
+            fprintf(out, "%s [", node->symbol->value);
+            ast_decomp(node->children[0]);
+            fprintf(out, "] = ");
+            ast_decomp(node->children[1]);
+            fprintf(out, ";\n");
             break;
         default:
             break;

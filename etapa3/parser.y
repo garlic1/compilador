@@ -88,19 +88,7 @@ global: type TK_IDENTIFIER '=' single_value ';'  {$$ = ast_create(AST_GLOBAL_VAR
     | vector_declaration                         
     ;
 
-vector_declaration: type TK_IDENTIFIER '[' LIT_INT ']' ';' {
-        AST* lit_node = ast_create(AST_SYMBOL, $4, 0, 0, 0, 0);
-
-        $$ = ast_create(
-            AST_VECTOR_DECLARATION, 
-            $2,
-            $1, 
-            lit_node, 
-            0, 
-            0
-        );
-    }
-    | type TK_IDENTIFIER '[' LIT_INT ']' vector_initial_values ';' {
+vector_declaration: type TK_IDENTIFIER '[' LIT_INT ']' vector_initial_values ';' {
         AST* lit_node = ast_create(AST_SYMBOL, $4, 0, 0, 0, 0);
 
         $$ = ast_create(
@@ -114,9 +102,9 @@ vector_declaration: type TK_IDENTIFIER '[' LIT_INT ']' ';' {
     }
 
 vector_initial_values: single_value vector_initial_values {
-        ast_create(AST_VECTOR_INTIIAL_VALUES, 0, $1, $2, 0, 0);
+        $$ = ast_create(AST_VECTOR_INTIIAL_VALUES, 0, $1, $2, 0, 0);
     }
-    | single_value { ast_create(AST_VECTOR_INTIIAL_VALUES, 0, $1, 0, 0, 0); }
+    | { $$ = 0; }
     ;
 
 // FUNCTION PROTOTYPES

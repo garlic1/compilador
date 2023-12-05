@@ -1,0 +1,3 @@
+code funcao {
+    abcabcab + 2;
+}
