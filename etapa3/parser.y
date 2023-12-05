@@ -45,9 +45,6 @@
 %type<ast> functions_list
 %type<ast> vector_declaration
 %type<ast> vector_initial_values
-%type<ast> int_recursion
-%type<ast> char_recursion
-%type<ast> real_recursion
 %type<ast> function_prototype
 %type<ast> parameter_list
 %type<ast> parameter
@@ -77,7 +74,7 @@
 
 %%
 
-program: global_list functions_list {ast_print($1, 0);ast_print($2, 0);ast_decomp($2);}
+program: global_list functions_list {ast_print($1, 0);ast_decomp($1);ast_print($2, 0);ast_decomp($2);}
     ;
 
 // GLOBAL VARIABLES
@@ -91,25 +88,35 @@ global: type TK_IDENTIFIER '=' single_value ';'  {$$ = ast_create(AST_GLOBAL_VAR
     | vector_declaration                         
     ;
 
-vector_declaration: type TK_IDENTIFIER '[' LIT_INT ']' ';' {}
-    | type TK_IDENTIFIER '[' LIT_INT ']' '=' '[' vector_initial_values ']' ';' {}
+vector_declaration: type TK_IDENTIFIER '[' LIT_INT ']' ';' {
+        AST* lit_node = ast_create(AST_SYMBOL, $4, 0, 0, 0, 0);
 
-vector_initial_values: LIT_INT int_recursion {}
-    | LIT_CHAR char_recursion {}
-    | LIT_REAL real_recursion {}
-    | single_value {}
-    ;
+        $$ = ast_create(
+            AST_VECTOR_DECLARATION, 
+            $2,
+            $1, 
+            lit_node, 
+            0, 
+            0
+        );
+    }
+    | type TK_IDENTIFIER '[' LIT_INT ']' vector_initial_values ';' {
+        AST* lit_node = ast_create(AST_SYMBOL, $4, 0, 0, 0, 0);
 
-int_recursion: LIT_INT int_recursion {}
-    | LIT_INT {}
-    ;
+        $$ = ast_create(
+            AST_VECTOR_DECLARATION,
+            $2,
+            $1,
+            lit_node,
+            $6,
+            0
+        );
+    }
 
-char_recursion: LIT_CHAR char_recursion {}
-    | LIT_CHAR {}
-    ;
-
-real_recursion: LIT_REAL real_recursion {}
-    | LIT_REAL {}
+vector_initial_values: single_value vector_initial_values {
+        ast_create(AST_VECTOR_INTIIAL_VALUES, 0, $1, $2, 0, 0);
+    }
+    | single_value { ast_create(AST_VECTOR_INTIIAL_VALUES, 0, $1, 0, 0, 0); }
     ;
 
 // FUNCTION PROTOTYPES
@@ -135,22 +142,21 @@ function: KW_CODE TK_IDENTIFIER command { $$ = ast_create(AST_ACCESS_FUNCTION, $
     ;
    
 command: flow_control 
-    | expr  
-    | simple_command
+    | expr ';'
+    | simple_command ';'
     | block
-    |       { $$ = 0; }
     ;
 
 block: '{' commands_chain '}' { $$ = ast_create(AST_BLOCK, 0, $2, 0, 0, 0); }
     ;
 
-commands_chain: command ';' commands_chain { $$ = ast_create(AST_COMMANDS_CHAIN, 0, $1, $3, 0, 0); }
+commands_chain: command commands_chain { $$ = ast_create(AST_COMMANDS_CHAIN, 0, $1, $2, 0, 0); }
     |   { $$ = 0; }
     ;
 
 // FLOW CONTROL
 
-flow_control: KW_IF '(' expr ')' command    %prec "then" { $$ = ast_create(AST_IF, 0, $3, $5, 0, 0); }
+flow_control: KW_IF '(' expr ')' command ';'   %prec "then" { $$ = ast_create(AST_IF, 0, $3, $5, 0, 0); }
     | KW_IF '(' expr ')' command KW_ELSE command { $$ = ast_create(AST_IF_ELSE, 0, $3, $5, $7, 0); }
     | KW_WHILE '(' expr ')' command { $$ = ast_create(AST_WHILE, 0, $3, $5, 0, 0); }
     ;
@@ -197,7 +203,7 @@ expr: TK_IDENTIFIER {$$ = ast_create(AST_SYMBOL, $1, 0, 0, 0, 0);}
     | expr '|' expr {$$ = ast_create(AST_OR, 0, $1, $3, 0, 0);}
     | '~' expr {$$ = ast_create(AST_NOT, 0, $2, 0, 0, 0);}
     | TK_IDENTIFIER '(' expr_list ')' {$$ = ast_create(AST_ACCESS_FUNCTION, $1, $3, 0, 0, 0);}
-    | KW_INPUT {$$ = ast_create(AST_INPUT, 0, 0, 0, 0, 0);}
+    | KW_INPUT '(' type ')' {$$ = ast_create(AST_INPUT, 0, $3, 0, 0, 0);}
     ;
 
 expr_list: expr ',' expr_list   { $$ = ast_create(AST_EXPR_LIST, 0, $1, $3, 0, 0); }
