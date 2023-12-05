@@ -22,5 +22,7 @@ parser.tab.c: parser.y
 clean:
 	rm lex.yy.c etapa2 parser.tab.c parser.tab.h *.o
 
+remake: clean etapa2
+
 build: clean
 		tar cvzf etapa2.tgz .

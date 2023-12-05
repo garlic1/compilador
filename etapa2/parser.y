@@ -60,24 +60,10 @@ global: type TK_IDENTIFIER '=' single_value ';'
     ;
 
 vector_declaration: type TK_IDENTIFIER '[' LIT_INT ']' ';'
-    | type TK_IDENTIFIER '[' LIT_INT ']' '=' '[' vector_initial_values ']' ';'
+    | type TK_IDENTIFIER '[' LIT_INT ']' vector_initial_values ';'
 
-vector_initial_values: LIT_INT int_recursion
-    | LIT_CHAR char_recursion
-    | LIT_REAL real_recursion
+vector_initial_values: single_value vector_initial_values 
     | single_value
-    ;
-
-int_recursion: LIT_INT int_recursion
-    | LIT_INT
-    ;
-
-char_recursion: LIT_CHAR char_recursion
-    | LIT_CHAR
-    ;
-
-real_recursion: LIT_REAL real_recursion
-    | LIT_REAL
     ;
 
 // FUNCTION PROTOTYPES
@@ -103,22 +89,21 @@ function: KW_CODE TK_IDENTIFIER command
     ;
    
 command: flow_control
-    | expr
-    | simple_command
+    | expr ';'
+    | simple_command ';'
     | block
-    |
     ;
 
 block: '{' commands_chain '}'
     ;
 
-commands_chain: command ';' commands_chain
+commands_chain: command commands_chain
     |
     ;
 
 // FLOW CONTROL
 
-flow_control: KW_IF '(' expr ')' command    %prec "then"
+flow_control: KW_IF '(' expr ')' command ';'   %prec "then"
     | KW_IF '(' expr ')' command KW_ELSE command
     | KW_WHILE '(' expr ')' command
     ;
@@ -164,7 +149,7 @@ expr: TK_IDENTIFIER
     | expr '|' expr 
     | '~' expr 
     | TK_IDENTIFIER '(' expr_list ')'
-    | KW_INPUT
+    | KW_INPUT '(' type ')'
     ;
 
 expr_list: expr ',' expr_list
