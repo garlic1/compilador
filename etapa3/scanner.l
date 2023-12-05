@@ -9,6 +9,7 @@
     #include "ast.h"
     #include "parser.tab.h"
     int running = 1;
+    void init_table();
 %}
 
 %x COMMENT
@@ -38,12 +39,12 @@
 <COMMENT>"\n"       {/* nop */}
 <COMMENT>.          {/* nop */}
 
-[0-9]+"."[0-9]+ {insert_node(yytext, LIT_REAL); return LIT_REAL;}
-[0-9]+          {insert_node(yytext, LIT_INT); return LIT_INT;}
-"'"."'"         {insert_node(yytext, LIT_CHAR); return LIT_CHAR;}
-"\""([^"\n]|"\\\"")*"\""      {insert_node(yytext, LIT_STRING); return LIT_STRING;}
+[0-9]+"."[0-9]+ {yylval.symbol = insert_node(yytext, LIT_REAL); return LIT_REAL;}
+[0-9]+          {yylval.symbol = insert_node(yytext, LIT_INT); return LIT_INT;}
+"'"."'"         {yylval.symbol = insert_node(yytext, LIT_CHAR); return LIT_CHAR;}
+"\""([^"\n]|"\\\"")*"\""      {yylval.symbol = insert_node(yytext, LIT_STRING); return LIT_STRING;}
 
-[a-zA-Z_0-9]* {insert_node(yytext, TK_IDENTIFIER); return TK_IDENTIFIER;}
+[a-zA-Z_0-9]* {yylval.symbol = insert_node(yytext, TK_IDENTIFIER); return TK_IDENTIFIER;}
 
 \n           {/* nop */}
 " "          {/* nop */}

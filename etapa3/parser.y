@@ -74,7 +74,7 @@
 
 %%
 
-program: global_list functions_list {ast_print($1, 0);ast_decomp($1);ast_print($2, 0);ast_decomp($2);}
+program: global_list functions_list {ast_print($1, 0);ast_print($2, 0);ast_decomp($1);ast_decomp($2);}
     ;
 
 // GLOBAL VARIABLES
@@ -138,7 +138,7 @@ functions_list: function functions_list { $$ = ast_create(AST_FUNCTION_LIST, 0, 
     |   { $$ = 0; }
     ;
 
-function: KW_CODE TK_IDENTIFIER command { $$ = ast_create(AST_ACCESS_FUNCTION, $2, $3, 0, 0, 0); }
+function: KW_CODE TK_IDENTIFIER command { $$ = ast_create(AST_FUNCTION, $2, $3, 0, 0, 0); }
     ;
    
 command: flow_control 
@@ -175,7 +175,7 @@ return_command: KW_RETURN expr { $$ = ast_create(AST_RETURN, 0, $2, 0, 0, 0); }
 print_command: KW_PRINT print_value { $$ = ast_create(AST_PRINT, 0, $2, 0, 0, 0); }
     ;
 
-print_value: LIT_STRING { $$ = ast_create(AST_PRINT_VALUE, 0, 0, 0, 0, 0); }  
+print_value: LIT_STRING { $$ = ast_create(AST_PRINT_VALUE, $1, 0, 0, 0, 0); }  
     | expr              { $$ = ast_create(AST_PRINT_VALUE, 0, $1, 0, 0, 0); }
     ;
 
@@ -217,7 +217,7 @@ type: KW_INT   {$$ = ast_create(AST_INT, 0, 0, 0, 0, 0);}
     | KW_FLOAT {$$ = ast_create(AST_FLOAT, 0, 0, 0, 0, 0);}
     ;
 
-single_value: LIT_INT {$$ = ast_create(AST_SYMBOL, $1, 0, 0, 0, 0);}
+single_value: LIT_INT {$$ = ast_create(AST_SYMBOL, $1, 0, 0, 0, 0); }
     | LIT_CHAR {$$ = ast_create(AST_SYMBOL, $1, 0, 0, 0, 0);}
     | LIT_REAL {$$ = ast_create(AST_SYMBOL, $1, 0, 0, 0, 0);}
     ;

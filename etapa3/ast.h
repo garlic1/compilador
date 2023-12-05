@@ -47,6 +47,8 @@
 #define AST_RETURN 36
 #define AST_PRINT 37
 #define AST_PRINT_VALUE 38
+#define AST_VECTOR_INTIIAL_VALUES 39
+#define AST_FUNCTION 40
 
 typedef struct ast_node {
     int type;
