@@ -3,7 +3,7 @@ int v[10] 'a' 0'b'0 0 0 0 0 0 0;
 
 code array {
     v[10] = 'a';
-    a = v[10];
+    a = v[a + c * 2 + (c + 2)];
     v[10] = v[11] + 2;
     v[11] = aergfwaeg[12];
 }
