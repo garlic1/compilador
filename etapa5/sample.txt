@@ -18,6 +18,7 @@ linhas
 code main
   {
   1a = 0;
+  a+b;
   d = d - i;
   d = 5;
   v[d] = 55;

@@ -19,6 +19,10 @@ void tac_print(tac_node* tac) {
         return;
     }
 
+    if (tac->type == TAC_SYMBOL) {
+        return;
+    }
+
     fprintf(stderr, "TAC(");
     switch(tac->type) {
         case TAC_SYMBOL: 
@@ -215,6 +219,39 @@ tac_node* generate_code(AST* node) {
     switch (node->type) {
         case AST_GLOBAL_VARIABLE: 
             result = tac_create(TAC_GLOBAL_VARIABLE, node->symbol, 0, 0); 
+            break;
+        case AST_SYMBOL:
+            result = tac_create(TAC_SYMBOL, node->symbol, 0, 0);
+            break;
+        case AST_SUM:
+            result = tac_join(
+                tac_join(code[0],code[1]),
+                tac_create(TAC_SUM,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
+            );
+            break;
+        case AST_SUB:
+            result = tac_join(
+                tac_join(code[0],code[1]),
+                tac_create(TAC_SUB,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
+            );
+            break;
+        case AST_MUL:
+            result = tac_join(
+                tac_join(code[0],code[1]),
+                tac_create(TAC_MUL,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
+            );
+            break;
+        case AST_DIV:
+            result = tac_join(
+                tac_join(code[0],code[1]),
+                tac_create(TAC_DIV,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
+            );
+            break;
+        case AST_ATTR:
+            result = tac_join(
+                code[0],
+                tac_create(TAC_ATTR,node->symbol,code[0]?code[0]->res:0,0)
+            );
             break;
         default: 
             result = tac_join(code[0], tac_join(code[1], tac_join(code[2], code[3])));

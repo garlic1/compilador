@@ -75,7 +75,7 @@
 
 %%
 
-program: global_list functions_list {ast_print($1, 0);ast_print($2, 0);ast_decomp($1);ast_decomp($2);}
+program: global_list functions_list {ast_print($1, 0);ast_print($2, 0);ast_decomp($1);ast_decomp($2);tac_print_backwards(generate_code($1)); tac_print_backwards(generate_code($2));}
     ;
 
 // GLOBAL VARIABLES
@@ -85,7 +85,7 @@ global_list: global global_list         {$$ = ast_create(AST_GLOBAL_LIST, 0, $1,
     |   {$$ = 0;}
     ;
 
-global: type TK_IDENTIFIER '=' single_value ';'  {$$ = ast_create(AST_GLOBAL_VARIABLE, $2, $1, $4, 0, 0); tac_print(tac_create(TAC_GLOBAL_VARIABLE,$2,0,0));}
+global: type TK_IDENTIFIER '=' single_value ';'  {$$ = ast_create(AST_GLOBAL_VARIABLE, $2, $1, $4, 0, 0);}
     | vector_declaration                         
     ;
 
@@ -174,7 +174,7 @@ attribution: TK_IDENTIFIER '=' expr { $$ = ast_create(AST_ATTR, $1, $3, 0, 0, 0)
 
 // EXPRESSIONS
 
-expr: TK_IDENTIFIER {$$ = ast_create(AST_SYMBOL, $1, 0, 0, 0, 0); tac_print(tac_create(TAC_SYMBOL,$1,0,0));} 
+expr: TK_IDENTIFIER {$$ = ast_create(AST_SYMBOL, $1, 0, 0, 0, 0);} 
     | TK_IDENTIFIER '[' expr ']'  {$$ = ast_create(AST_ACCESS_VECTOR, $1, $3, 0, 0, 0);}
     | single_value {$$ = $1;}
     | '(' expr ')' {$$ = $2;}

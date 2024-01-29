@@ -7,7 +7,7 @@ int incn (int  x, int  n);
 
 code main {
 1a = 0;
-d = d - i;
+a + bd = d - i;
 d = 5;
 v [d] = 55;
 print v [5];
