@@ -76,3 +76,11 @@ hash_node* create_temp(void) {
     sprintf(buffer,"teeeemp_var_temp%d", serial++);
     return insert_node(buffer, SYMBOL_VARIABLE);
 }
+
+hash_node* create_label(void) {
+    static int serial = 0;
+    char buffer[256] = "";
+
+    sprintf(buffer,"mylabeeel_mylabel_my%d", serial++);
+    return insert_node(buffer, SYMBOL_LABEL);
+}

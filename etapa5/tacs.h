@@ -51,6 +51,9 @@
 #define TAC_VECTOR_INTIIAL_VALUES 39
 #define TAC_FUNCTION 40
 
+#define TAC_JUMP_FALSE 41
+#define TAC_LABEL 42
+
 typedef struct tac_node {
     int type;
     hash_node* res;
