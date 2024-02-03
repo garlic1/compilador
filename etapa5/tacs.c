@@ -243,75 +243,20 @@ tac_node* generate_code(AST* node) {
             result = tac_create(TAC_SYMBOL, node->symbol, 0, 0);
             break;
         case AST_SUM:
-            result = tac_join(
-                tac_join(code[0],code[1]),
-                tac_create(TAC_SUM,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
-            );
-            break;
         case AST_SUB:
-            result = tac_join(
-                tac_join(code[0],code[1]),
-                tac_create(TAC_SUB,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
-            );
-            break;
         case AST_MUL:
-            result = tac_join(
-                tac_join(code[0],code[1]),
-                tac_create(TAC_MUL,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
-            );
-            break;
         case AST_DIV:
-            result = tac_join(
-                tac_join(code[0],code[1]),
-                tac_create(TAC_DIV,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
-            );
-            break;
         case AST_LT:
-            result = tac_join(
-                tac_join(code[0],code[1]),
-                tac_create(TAC_LT,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
-            );
-            break;
         case AST_GT:
-            result = tac_join(
-                tac_join(code[0],code[1]),
-                tac_create(TAC_GT,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
-            );
-            break;
         case AST_LE:
-            result = tac_join(
-                tac_join(code[0],code[1]),
-                tac_create(TAC_LE,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
-            );
-            break;
         case AST_GE:
-            result = tac_join(
-                tac_join(code[0],code[1]),
-                tac_create(TAC_GE,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
-            );
-            break;
         case AST_EQ:
-            result = tac_join(
-                tac_join(code[0],code[1]),
-                tac_create(TAC_EQ,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
-            );
-            break;
         case AST_DIF:
-            result = tac_join(
-                tac_join(code[0],code[1]),
-                tac_create(TAC_DIF,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
-            );
-            break;
         case AST_AND:
-            result = tac_join(
-                tac_join(code[0],code[1]),
-                tac_create(TAC_AND,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
-            );
-            break;
         case AST_OR:
             result = tac_join(
                 tac_join(code[0],code[1]),
-                tac_create(TAC_OR,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
+                tac_create(node->type,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
             );
             break;
         case AST_ATTR:
