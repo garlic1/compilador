@@ -2,7 +2,7 @@
 
 tac_node* make_if_else(tac_node* tac1, tac_node* tac2);
 tac_node* make_if(tac_node* tac1, tac_node* tac2);
-// tac_node* make_while(tac_node* tac1, hash_node* return_label);
+tac_node* make_while(tac_node* tac1, tac_node* tac2, hash_node* return_label);
 
 tac_node* tac_create(int type, hash_node* res, hash_node* op1, hash_node* op2) {
     tac_node* node = (tac_node*)calloc(1, sizeof(tac_node));
@@ -193,6 +193,10 @@ void tac_print(tac_node* tac) {
             fprintf(stderr, "TAC_JUMP_FALSE");
             break;
         
+        case TAC_JUMP:
+            fprintf(stderr, "TAC_JUMP");
+            break;
+        
         case TAC_LABEL:
             fprintf(stderr, "TAC_LABEL");
             break;
@@ -264,10 +268,52 @@ tac_node* generate_code(AST* node) {
                 tac_create(TAC_DIV,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
             );
             break;
+        case AST_LT:
+            result = tac_join(
+                tac_join(code[0],code[1]),
+                tac_create(TAC_LT,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
+            );
+            break;
+        case AST_GT:
+            result = tac_join(
+                tac_join(code[0],code[1]),
+                tac_create(TAC_GT,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
+            );
+            break;
+        case AST_LE:
+            result = tac_join(
+                tac_join(code[0],code[1]),
+                tac_create(TAC_LE,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
+            );
+            break;
+        case AST_GE:
+            result = tac_join(
+                tac_join(code[0],code[1]),
+                tac_create(TAC_GE,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
+            );
+            break;
         case AST_EQ:
             result = tac_join(
                 tac_join(code[0],code[1]),
                 tac_create(TAC_EQ,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
+            );
+            break;
+        case AST_DIF:
+            result = tac_join(
+                tac_join(code[0],code[1]),
+                tac_create(TAC_DIF,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
+            );
+            break;
+        case AST_AND:
+            result = tac_join(
+                tac_join(code[0],code[1]),
+                tac_create(TAC_AND,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
+            );
+            break;
+        case AST_OR:
+            result = tac_join(
+                tac_join(code[0],code[1]),
+                tac_create(TAC_OR,create_temp(),code[0]?code[0]->res:0,code[1]?code[1]->res:0)
             );
             break;
         case AST_ATTR:
@@ -276,12 +322,18 @@ tac_node* generate_code(AST* node) {
                 tac_create(TAC_ATTR,node->symbol,code[0]?code[0]->res:0,0)
             );
             break;
+        case AST_NOT:
+            result = tac_join(
+                code[0],
+                tac_create(TAC_NOT,create_temp(), code[0]?code[0]->res:0,0)
+            );
+            break;
         case AST_IF:
             result = make_if(code[0],code[1]);
             break;
-        // case AST_WHILE:
-        //     result = make_while(code, label);
-        //     break;
+        case AST_WHILE:
+            result = make_while(code[0], code[1], label);
+            break;
         default: 
             result = tac_join(code[0], tac_join(code[1], tac_join(code[2], code[3])));
             break;
@@ -325,17 +377,25 @@ tac_node* make_if(tac_node* tac1, tac_node* tac2) {
     return tac_join(jump_tac,label_tac);
 }
 
-// tac_node* make_while(tac_node* code[], hash_node* return_label) {
-//     tac_node* jump_tac = NULL;
-//     tac_node* label_tac = NULL;
-//     hash_node* end_label = NULL;
+tac_node* make_while(tac_node* tac1, tac_node* tac2, hash_node* return_label) {
+    tac_node* while_tac = NULL;
+    tac_node* label_tac = NULL;
+    tac_node* end_tac = NULL;
+    hash_node* end_label = NULL;
 
-//     end_label = create_label();
+    end_label = create_label();
 
-//     jump_tac = tac_create(TAC_WHILE,end_label,code[0]?code[0]->res:0,0);
-//     jump_tac->prev=tac1;
-//     label_tac = tac_create(TAC_LABEL,new_label,0,0);
-//     label_tac->prev=tac2;
+    while_tac = tac_create(TAC_WHILE,return_label,0,0);
+    label_tac = tac_create(TAC_JUMP_FALSE,end_label,tac1?tac1->res:0,0);
+    label_tac->prev=tac1;
+    end_tac = tac_create(TAC_LABEL,end_label,0,0);
+    end_tac->prev=tac_join(tac2,tac_create(TAC_JUMP,return_label,0,0));
 
-//     return tac_join(jump_tac,label_tac);
-// }
+    return tac_join(
+        while_tac,
+        tac_join(
+                label_tac,
+                end_tac
+            )
+        );
+}
