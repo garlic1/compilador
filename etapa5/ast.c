@@ -369,7 +369,7 @@ void ast_decomp (AST *node) {
             break;
         case AST_VECTOR_INTIIAL_VALUES: 
             ast_decomp(node->children[0]);
-            if (out, node->children[1]) {
+            if (node->children[1]) {
                 fprintf(out, " ");
                 ast_decomp(node->children[1]);
             }
