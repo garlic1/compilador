@@ -4,6 +4,8 @@ tac_node* make_if(tac_node* tac1, tac_node* tac2);
 tac_node* make_if_else(tac_node* tac1, tac_node* tac2, tac_node* tac3);
 tac_node* make_while(tac_node* tac1, tac_node* tac2, hash_node* return_label);
 tac_node* make_print(tac_node* tac1, AST* node);
+tac_node* make_function(tac_node* tacs[], AST* node);
+tac_node* make_access_function(tac_node* tacs[], AST* node, hash_node* label);
 
 tac_node* tac_create(int type, hash_node* res, hash_node* op1, hash_node* op2) {
     tac_node* node = (tac_node*)calloc(1, sizeof(tac_node));
@@ -201,6 +203,16 @@ void tac_print(tac_node* tac) {
         case TAC_LABEL:
             fprintf(stderr, "TAC_LABEL");
             break;
+        
+        case TAC_BEGIN_FUNCTION:
+            fprintf(stderr, "TAC_BEGIN_FUNCTION");
+            break;
+        case TAC_END_FUNCTION:
+            fprintf(stderr, "TAC_END_FUNCTION");
+            break;
+        case TAC_FUNCTION_RESULT:
+            fprintf(stderr, "TAC_FUNCTION_RESULT");
+            break;
 
         default:
             fprintf(stderr, "TAC_UNKNOWN");
@@ -287,6 +299,7 @@ tac_node* generate_code(AST* node) {
         case AST_PRINT_VALUE:
             result = make_print(code[0],node);
             break;
+
         case AST_RETURN:
             result = tac_join(code[0], tac_create(TAC_RETURN, code[0]?code[0]->res:0,0,0));
             break;
@@ -294,6 +307,19 @@ tac_node* generate_code(AST* node) {
             result = tac_create(TAC_INPUT,create_temp(),0,0);
             break;
         
+        case AST_FUNCTION:
+            result = make_function(code, node);
+            break;
+        case AST_ACCESS_FUNCTION:
+            label = create_label();
+            result = make_access_function(code,node,label);
+            break;
+        
+        case AST_ACCESS_VECTOR:
+            result = tac_join(code[0], tac_create(TAC_ACCESS_VECTOR,create_temp(),node->symbol,code[0]?code[0]->res:0));
+            break;
+
+
         default: 
             result = tac_join(code[0], tac_join(code[1], tac_join(code[2], code[3])));
             break;
@@ -392,4 +418,35 @@ tac_node* make_print(tac_node* tac1, AST* node) {
     print_tac=tac_create(TAC_PRINT_VALUE,tac1?tac1->res:0,0,0);
     print_tac->prev = tac1;
     return print_tac;
+}
+
+tac_node* make_function(tac_node* tacs[], AST* node) {
+    tac_node* symbol = NULL;
+    tac_node* tac_begin_function = NULL;
+    tac_node* tac_end_function = NULL;
+
+    symbol = tac_create(TAC_SYMBOL, node->symbol, 0,0);
+    tac_begin_function = tac_create(TAC_BEGIN_FUNCTION, symbol->res, 0, 0);
+    tac_begin_function->prev = symbol;
+    tac_end_function = tac_create(TAC_END_FUNCTION, symbol->res, 0, 0);
+    tac_end_function->prev=tacs[0];
+
+    return tac_join(tac_begin_function, tac_end_function);
+}
+
+tac_node* make_access_function(tac_node* tacs[], AST* node, hash_node* label) {
+    tac_node* tac_function_call = NULL;
+    tac_node* tac_jump_to_function = NULL;
+    tac_function_call = tac_create(TAC_ACCESS_FUNCTION,node->symbol,label,0);
+    tac_jump_to_function = tac_join(tac_create(TAC_JUMP,node->symbol,0,0), tac_create(TAC_LABEL,label,0,0)); 
+
+    // params?
+
+    return tac_join(
+                tac_join(
+                    tac_join(tac_function_call,tacs[0]),
+                    tac_jump_to_function
+                ),
+                tac_create(TAC_FUNCTION_RESULT, create_temp(), 0, 0)
+            );
 }

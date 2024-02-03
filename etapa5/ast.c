@@ -98,6 +98,9 @@ void ast_print(AST* node, int level) {
         case AST_COMMANDS_CHAIN:
             fprintf(stderr, "AST_COMMANDS_CHAIN");
             break;
+        case AST_FUNCTION:
+            fprintf(stderr, "AST_FUNCTION");
+            break;
         case AST_FUNCTION_LIST:
             fprintf(stderr, "AST_FUNCTION_LIST");
             break;

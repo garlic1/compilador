@@ -55,6 +55,11 @@
 #define TAC_LABEL 42
 #define TAC_JUMP 43
 
+#define TAC_BEGIN_FUNCTION 44
+#define TAC_END_FUNCTION 45
+
+#define TAC_FUNCTION_RESULT 46
+
 typedef struct tac_node {
     int type;
     hash_node* res;
