@@ -1,9 +1,28 @@
 #include <stdio.h>
 
 int main() {
-    int a = 2;
-    
-    printf("%d\n", a);
+    int a, b, c;
+    a = 2;
+    b = 3;
 
-    return 0;
+    c = a + b;
+    c = a - b;
+    c = a * b;
+    c = a / b;
+    printf("hello");
+    c = a < b;
+    printf("hello");
+    c = a > b;
+    printf("hello");
+    c = a <= b;
+    printf("hello");
+    c = a >= b;
+    printf("hello");
+    c = a != b;
+    printf("hello");
+    c = a && b;
+    printf("hello");
+    c = a || b;
+    printf("hello");
+    c = !a;
 }

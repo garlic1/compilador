@@ -24,5 +24,6 @@ hash_node* delete_table(void);
 void print_table(void);
 hash_node* create_temp(void);
 hash_node* create_label(void);
+void printAsm(FILE *fout);
 
 #endif

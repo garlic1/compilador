@@ -16,7 +16,7 @@ void generateAsm(tac_node* first) {
     );
 
     //hash table
-
+    printAsm(fout);
     //each tac
     while(tac) {
         switch(tac->type) {
@@ -106,8 +106,8 @@ void generateAsm(tac_node* first) {
                             "\n## TAC_PRINT\n"
                             "\tmovl	_%s(%%rip), %%esi\n"
                             "\tleaq	.print_int(%%rip), %%rdi\n"
-                            "\tmovl	$0, %%eax\n"
-                            "\tcall	printf@PLT\n",
+                            "\tmovb	$0, %%al\n"
+                            "\tcallq	printf@PLT\n",
                             tac->res?tac->res->value:""
                 );
                 break;
@@ -121,41 +121,54 @@ void generateAsm(tac_node* first) {
                             tac->res?tac->res->value:""
                 );
                 break;
-            // case TAC_LT:
-            //     fprintf(stderr, "TAC_LT");
-            //     break;
 
-            // case TAC_GT:
-            //     fprintf(stderr, "TAC_GT");
-            //     break;
+            case TAC_LT:
+                break;
 
-            // case TAC_LE:
-            //     fprintf(stderr, "TAC_LE");
-            //     break;
+            case TAC_GT:
+                break;
 
-            // case TAC_GE:
-            //     fprintf(stderr, "TAC_GE");
-            //     break;
+            case TAC_LE:
+                break;
 
-            // case TAC_EQ:
-            //     fprintf(stderr, "TAC_EQ");
-            //     break;
+            case TAC_GE:
+                break;
 
-            // case TAC_DIF:
-            //     fprintf(stderr, "TAC_DIF");
-            //     break;
+            case TAC_EQ:
+                break;
 
-            // case TAC_AND:
-            //     fprintf(stderr, "TAC_AND");
-            //     break;
+            case TAC_DIF:
+                break;
 
-            // case TAC_OR:
-            //     fprintf(stderr, "TAC_OR");
-            //     break;
+            case TAC_AND:
+                break;
 
-            // case TAC_NOT:
-            //     fprintf(stderr, "TAC_NOT");
-            //     break;
+            case TAC_OR:
+                break;
+
+            case TAC_NOT:
+                break;
+
+            case TAC_IF:
+                break;
+            case TAC_IF_ELSE:
+                break;
+            case TAC_WHILE:
+                break;
+            
+            case TAC_PRINT:
+                break;
+
+            case TAC_RETURN:
+                break;
+            
+            case TAC_FUNCTION:
+                break;
+            case TAC_ACCESS_FUNCTION:
+                break;
+            
+            case TAC_ACCESS_VECTOR:
+                break;
         }
         tac = tac->next;
     }
