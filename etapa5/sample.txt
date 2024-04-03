@@ -18,13 +18,13 @@ linhas
 code main
   {
   1a = 0;
-  a+b;
   d = d - i;
   d = 5;
   v[d] = 55;
   print v[5];
   print d;
   i = 2;
+  a = ~b;
 
   print "Digite um numero: \n";
   d = input(int);
@@ -32,8 +32,8 @@ code main
 
   while (i<10)
     {
-    i = incn(i,1);
-    d = incn(d,d);
+      i = incn(i,1);
+      d = incn(d,d);
     }
 
   print "Incrementado algumas vezes a fica ";
@@ -42,7 +42,7 @@ code main
 
   if (a==15)
     {
-    a = a + 1;
+    a = a + a[b+c+d];
     print "A era=15\n";
     };
     
@@ -51,6 +51,7 @@ code main
     print "Nao tem como isso...\n";
     }
   else
-    print "OK!\n"; 
+    print "OK!\n";
   {{}} {}
+    return a+b;
   }

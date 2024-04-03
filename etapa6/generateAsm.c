@@ -3,9 +3,12 @@
 void generateAsm(tac_node* first) {
     tac_node* tac = first;
 
+
     FILE *fout;
     fout = fopen("out.s", "w");
-
+    int LC = 2;
+    int BL = 0;
+    
     // init
     fprintf(fout,
             "\n## FIXED INIT\n"

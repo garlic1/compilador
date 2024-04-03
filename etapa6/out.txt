@@ -3,7 +3,10 @@ int b = 3;
 
 code main {
 a = a + b;
-print a;
+if (a + b)
+    print a;
+else 
+    print b;
 }
 
 
