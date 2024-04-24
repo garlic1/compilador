@@ -37,18 +37,20 @@
 [0-9]+          { insert_node(yytext, LIT_INT); return LIT_INT; }
 "'"."'"         { insert_node(yytext, LIT_CHAR); return LIT_CHAR; }
 "\""([^"\n]|"\\\"")*"\""      {insert_node(yytext, LIT_STRING); return LIT_STRING;}
+"true" {insert_node(yytext, LIT_TRUE); return LIT_TRUE;}
+"false" {insert_node(yytext, LIT_FALSE); return LIT_FALSE;}
 
 [a-zA-Z_]{1}[a-zA-Z_0-9]* {insert_node(yytext, TK_IDENTIFIER); return TK_IDENTIFIER;}
 
-"//".*      {/* nop */}
-"/*"        { BEGIN(COMMENT); }
-<COMMENT>"*\\"   { BEGIN(INITIAL); }
-<COMMENT>"\n"       { yylineno++; }
+"/*"                { BEGIN(COMMENT); }
+<COMMENT>"*/"      { BEGIN(INITIAL); }
+<COMMENT>"\n"       {/* nop */}
 <COMMENT>.          {/* nop */}
 
 \n              {/* nop */}
 " "             {/* nop */}
 \t              {/* nop */}
+"//".*      {/* nop */}
 
 .           { return TOKEN_ERROR; }
 
