@@ -11,16 +11,18 @@ char array3[4] : 'a' 'b' 'c' 'd';
 bool array4[2] : true false;
 
 // Declaração de funções
-int soma(int x) {
+int soma(int x, int y) {
+    int resultado: 0;
     resultado = x + y;
     return resultado;
 }
 
 bool isEven(int num) {
-    return (num & 2 == 0);
+    return (num % 2 == 0);
 }
 
-float printArray(int arr) {
+void printArray(int arr[5]) {
+    int i: 0;
     while (i < 5) {
         print int arr[i];
         i = i + 1;
@@ -28,7 +30,12 @@ float printArray(int arr) {
 }
 
 // Função principal
-float main() {
+void main() {
+    int x: 5;
+    int y: 10;
+    int sumResult: 0;
+    bool checkEven: false;
+    
     sumResult = soma(x, y);
     print int "Resultado da soma: ";
     print int sumResult;

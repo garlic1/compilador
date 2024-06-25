@@ -46,7 +46,102 @@
 
 %%
 
-    program:;
+    program: global_declaration_list
+        ;
+
+    global_declaration_list: global_declaration global_declaration_list
+        |
+        ;
+    
+    global_declaration: variable_declaration
+        | function_declaration
+        | array_declaration
+        ;
+
+    function_declaration: type TK_IDENTIFIER '(' function_parameters ')' block
+        ;
+    
+    function_parameters: type TK_IDENTIFIER ',' function_parameters
+        | type TK_IDENTIFIER
+        |
+        ;
+
+    variable_declaration: type TK_IDENTIFIER ':' literal ';'
+        ;
+    
+    array_declaration: type TK_IDENTIFIER '[' expression ']' ';'
+        | type TK_IDENTIFIER '[' expression ']' ':' array_initial_values ';'
+        ;
+    
+    array_initial_values: literal array_initial_values
+        | literal
+        ;
+
+    command: flow_control 
+        | expression ';'
+        | simple_command ';'
+        | block
+        ;
+
+    simple_command: KW_PRINT type expression                // print expression
+        | KW_PRINT type LIT_STRING                          // print type string
+        | KW_PRINT LIT_STRING                               // print string
+        | KW_READ type TK_IDENTIFIER                        // read
+        | KW_RETURN expression                              // return
+        | TK_IDENTIFIER '=' expression                      // variable attribution
+        | TK_IDENTIFIER '[' expression ']' '=' expression   // array attribution
+        ;
+    
+    block: '{' commands_list '}'
+        ;
+    
+    commands_list: command commands_list
+        |
+        ;
+    
+    expression: TK_IDENTIFIER
+        | TK_IDENTIFIER '[' expression ']'
+        | literal
+        | '(' expression ')'
+        | expression '+' expression
+        | expression '-' expression
+        | expression '*' expression
+        | expression '/' expression
+        | expression '<' expression
+        | expression '>' expression
+        | expression OPERATOR_LE expression
+        | expression OPERATOR_GE expression
+        | expression OPERATOR_EQ expression
+        | expression OPERATOR_DIF expression
+        | expression '&' expression
+        | expression '|' expression
+        | '~' expression
+        | TK_IDENTIFIER '(' arguments_list ')'
+        ;
+    
+    arguments_list: expression ',' arguments_list
+        | expression
+        |
+        ;
+
+    flow_control: KW_IF '(' expression ')' command ';' %prec "then"
+        | KW_IF '(' expression ')' command KW_ELSE command
+        | KW_WHILE '(' expression ')' command
+        ;
+
+    type: KW_CHAR
+        | KW_BOOL
+        | KW_FLOAT
+        | KW_INT
+        ;
+    
+    literal: LIT_FALSE
+        | LIT_TRUE
+        | LIT_INT
+        | LIT_REAL
+        | LIT_CHAR
+        ;
+
 
 %%
 

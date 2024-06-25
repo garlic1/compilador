@@ -1,3 +1,6 @@
+#ifndef HASH_HEADER
+#define HASH_HEADER
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -16,3 +19,5 @@ hash_node* insert_node(char *entry, int type);
 hash_node* get_node(char *entry);
 hash_node* delete_table(void);
 void print_table(void);
+
+#endif
