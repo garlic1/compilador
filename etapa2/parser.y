@@ -69,8 +69,8 @@
     variable_declaration: type TK_IDENTIFIER ':' literal ';'
         ;
     
-    array_declaration: type TK_IDENTIFIER '[' expression ']' ';'
-        | type TK_IDENTIFIER '[' expression ']' ':' array_initial_values ';'
+    array_declaration: type TK_IDENTIFIER '[' LIT_INT ']' ';'
+        | type TK_IDENTIFIER '[' LIT_INT ']' ':' array_initial_values ';'
         ;
     
     array_initial_values: literal array_initial_values
