@@ -90,6 +90,7 @@
         | KW_RETURN expression                              // return
         | TK_IDENTIFIER '=' expression                      // variable attribution
         | TK_IDENTIFIER '[' expression ']' '=' expression   // array attribution
+        |                                                   // empty command
         ;
     
     block: '{' commands_list '}'
