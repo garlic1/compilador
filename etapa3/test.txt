@@ -1,0 +1,17 @@
+// Declarações globais de variáveis
+int a: 10;
+char b: 'z';
+float c: 3.14;
+bool d: true;
+
+int main ()
+  {
+  number = 0;
+  d = d - i;
+  d = 5;
+  v[d] = 55;
+  print int v[5];
+  print int d;
+  print char c;
+  i = 2;
+  }
