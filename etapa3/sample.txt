@@ -30,6 +30,7 @@ int main ()
   print "Digite um numero: \n";
   read int d;
 
+    i = incn(i,1, 2);
   while (i<10)
     {
     i = incn(i,1);

@@ -164,9 +164,9 @@ void ast_print(AST* node, int level) {
     }
 
     if (node->symbol!=0)
-        fprintf(stderr, ",%s", node->symbol->value);
+        fprintf(stderr, ", %s", node->symbol->value);
     else 
-        fprintf(stderr, ",0");
+        fprintf(stderr, ", 0");
     
     fprintf(stderr, ")\n");
     
@@ -176,5 +176,233 @@ void ast_print(AST* node, int level) {
 }
 
 void ast_decomp (AST *node) {
+    if (node == 0) {
+        return;
+    }
+
+    switch (node -> type) {
+        case AST_GLOBAL_DECLARATION_LIST:
+           ast_decomp(node->children[0]);
+            if (node -> children[1]) {
+                ast_decomp(node->children[1]);
+            }
+            break;
+        case AST_VARIABLE_DECLARATION:
+            ast_decomp(node->children[0]);
+            fprintf(out, "%s: ", node -> symbol -> value);
+            ast_decomp(node->children[1]);
+            fprintf(out, ";\n");
+            break;
+        case AST_FUNCTION_DECLARATION:
+            ast_decomp(node->children[0]);
+            fprintf(out, "%s(", node -> symbol -> value);
+            if (node -> children[1]) {
+                ast_decomp(node->children[1]);
+            }
+            fprintf(out, ") ");
+            ast_decomp(node->children[2]);
+            break;
+        case AST_FUNCTION_PARAMETERS: 
+            if (node -> children[0]) {
+                ast_decomp(node->children[0]);
+            }
+            fprintf(out, "%s", node -> symbol -> value);
+            if (node -> children[1]) {
+                fprintf(out, ", ");
+                ast_decomp(node->children[1]);
+            }
+            break;
+        case AST_ARRAY_DECLARATION:
+            ast_decomp(node->children[0]);
+            fprintf(out, "%s[", node -> symbol -> value);
+            ast_decomp(node->children[1]);
+            fprintf(out, "]");
+            if (node -> children[2]) {
+                fprintf(out, ": ");
+                ast_decomp(node->children[2]);
+            }
+            fprintf(out, ";\n");
+            break;
+        case AST_ARRAY_INITIAL_VALUES:
+            ast_decomp(node->children[0]);
+            if (node -> children[1]) {
+                fprintf(out, " ");
+                ast_decomp(node->children[1]);
+            }
+            break;
+        case AST_BLOCK:
+            fprintf(out, "{\n");
+            ast_decomp(node->children[0]);
+            fprintf(out,"}\n");
+            break;
+        case AST_PRINT_EXPRESSION:
+            fprintf(out, "print ");
+            ast_decomp(node->children[0]);
+            ast_decomp(node->children[1]);
+            fprintf(out, ";\n");
+            break;
+        case AST_PRINT_TYPE_STRING:
+            fprintf(out, "print ");
+            ast_decomp(node->children[0]);
+            ast_decomp(node->children[1]);
+            fprintf(out, ";\n");
+            break;
+        case AST_PRINT_STRING:
+            fprintf(out, "print ");
+            ast_decomp(node->children[0]);
+            fprintf(out, ";\n");
+            break;
+        case AST_READ:
+            fprintf(out, "read ");
+            ast_decomp(node->children[0]);
+            fprintf(out, "%s", node -> symbol -> value);
+            fprintf(out, ";\n");
+            break;
+        case AST_RETURN:
+            fprintf(out, "return ");
+            ast_decomp(node->children[0]);
+            fprintf(out, ";\n");
+            break;
+        case AST_VARIABLE_ATTRIBUTION:
+            fprintf(out, "%s = ", node -> symbol -> value);
+            ast_decomp(node->children[0]);
+            fprintf(out, ";\n");
+            break;
+        case AST_ARRAY_ATTRIBUTION:
+            fprintf(out, "%s[", node -> symbol -> value);
+            ast_decomp(node->children[0]);
+            fprintf(out, "] = ");
+            ast_decomp(node->children[1]);
+            fprintf(out, ";\n");
+            break;
+        case AST_COMMANDS_LIST:
+            if (node -> children[0]) {
+                ast_decomp(node->children[0]);
+                ast_decomp(node->children[1]);
+            }
+            break;
+        case AST_SUM:            
+            ast_decomp(node->children[0]);
+			fprintf(out, "+");
+			ast_decomp(node->children[1]);
+            break;
+        case AST_SUB:
+            ast_decomp(node->children[0]);
+			fprintf(out, "-");
+			ast_decomp(node->children[1]);
+            break;
+        case AST_MUL:
+            ast_decomp(node->children[0]);
+			fprintf(out, "*");
+			ast_decomp(node->children[1]);
+            break;
+        case AST_DIV:
+            ast_decomp(node->children[0]);
+			fprintf(out, "/");
+			ast_decomp(node->children[1]);
+            break;
+        case AST_LT:
+            ast_decomp(node->children[0]);
+			fprintf(out, "<");
+			ast_decomp(node->children[1]);
+            break;
+        case AST_GT:
+            ast_decomp(node->children[0]);
+			fprintf(out, ">");
+			ast_decomp(node->children[1]);
+            break;
+        case AST_LE:
+            ast_decomp(node->children[0]);
+			fprintf(out, "<=");
+			ast_decomp(node->children[1]);
+            break;
+        case AST_GE:
+            ast_decomp(node->children[0]);
+			fprintf(out, ">=");
+			ast_decomp(node->children[1]);
+            break;
+        case AST_EQ:
+            ast_decomp(node->children[0]);
+			fprintf(out, "+");
+			ast_decomp(node->children[1]);
+            break;
+        case AST_DIF:
+            ast_decomp(node->children[0]);
+			fprintf(out, "!=");
+			ast_decomp(node->children[1]);
+            break;
+        case AST_AND:
+            ast_decomp(node->children[0]);
+			fprintf(out, "&");
+			ast_decomp(node->children[1]);
+            break;
+        case AST_OR:
+            ast_decomp(node->children[0]);
+			fprintf(out, "|");
+			ast_decomp(node->children[1]);
+            break;
+        case AST_NOT:
+			fprintf(out, "~");
+            ast_decomp(node->children[0]);
+            break;
+        case AST_FUNCTION_CALL:
+            fprintf(out, "%s(", node -> symbol -> value);
+            ast_decomp(node->children[0]);
+			fprintf(out, ")");
+            break;
+        case AST_ARGUMENTS_LIST:
+            if (node -> children[0]) {
+                ast_decomp(node->children[0]);
+            }
+            if (node -> children[1]) {
+                fprintf(out, ", ");
+                ast_decomp(node->children[1]);
+            }
+            break;
+        case AST_INT:
+            fprintf(out, "int ");
+            break;
+        case AST_BOOL:
+            fprintf(out, "bool ");
+            break;
+        case AST_CHAR:
+            fprintf(out, "char ");
+            break;
+        case AST_FLOAT:
+            fprintf(out, "float ");
+            break;
+        case AST_SYMBOL:
+			fprintf(out,"%s",node -> symbol -> value);
+			break;
+        case AST_ARRAY_ACCESS:
+            fprintf(out, "%s[", node -> symbol -> value);
+            ast_decomp(node->children[0]);
+            fprintf(out, "]");
+            break;
+        case AST_IF:
+            fprintf(out, "if(");
+            ast_decomp(node->children[0]);
+            fprintf(out, ")");
+            ast_decomp(node->children[1]);
+            fprintf(out, ";\n");
+            break;
+        case AST_IF_ELSE:
+            fprintf(out, "if(");
+            ast_decomp(node->children[0]);
+            fprintf(out, ")");
+            ast_decomp(node->children[1]);
+            fprintf(out, " else ");
+            ast_decomp(node->children[2]);
+            break;
+        case AST_WHILE:
+            fprintf(out, "while(");
+            ast_decomp(node->children[0]);
+            fprintf(out, ")");
+            ast_decomp(node->children[1]);
+            break;
+        default:
+            fprintf(stderr, "AST_UNKNOWN");
+            break;
+    }
     return;
 }
