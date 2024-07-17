@@ -149,7 +149,7 @@
         |                                           {$$ = 0;}
         ;
 
-    flow_control: KW_IF '(' expression ')' command ';' %prec "then" {$$ = ast_create(AST_IF, 0, $3, $5, 0, 0);}
+    flow_control: KW_IF '(' expression ')' command %prec "then"     {$$ = ast_create(AST_IF, 0, $3, $5, 0, 0);}
         | KW_IF '(' expression ')' command KW_ELSE command          {$$ = ast_create(AST_IF_ELSE, 0, $3, $5, $7, 0);}
         | KW_WHILE '(' expression ')' command                       {$$ = ast_create(AST_WHILE, 0, $3, $5, 0, 0);}
         ;

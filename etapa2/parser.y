@@ -84,7 +84,6 @@
         ;
 
     simple_command: KW_PRINT type expression                // print expression
-        | KW_PRINT type LIT_STRING                          // print type string
         | KW_PRINT LIT_STRING                               // print string
         | KW_READ type TK_IDENTIFIER                        // read
         | KW_RETURN expression                              // return
@@ -125,7 +124,7 @@
         |
         ;
 
-    flow_control: KW_IF '(' expression ')' command ';' %prec "then"
+    flow_control: KW_IF '(' expression ')' command %prec "then"
         | KW_IF '(' expression ')' command KW_ELSE command
         | KW_WHILE '(' expression ')' command
         ;

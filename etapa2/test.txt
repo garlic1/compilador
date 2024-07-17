@@ -30,21 +30,21 @@ float printArray(int arr) {
 // Função principal
 float main() {
     sumResult = soma(x, y);
-    print int "Resultado da soma: ";
+    print "Resultado da soma: ";
     print int sumResult;
     
     checkEven = isEven(sumResult);
     if (checkEven) {
-        print char "O resultado é par.";
+        print "O resultado é par.";
     } else {
-        print char "O resultado é ímpar.";
+        print "O resultado é ímpar.";
     }
     
-    print char "Imprimindo o vetor array1:";
+    print "Imprimindo o vetor array1:";
     printArray(array1);
     
     // Comando read
     read int x;
-    print int "Novo valor de x: ";
+    print "Novo valor de x: ";
     print int x;
 }
