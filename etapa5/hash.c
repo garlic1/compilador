@@ -62,3 +62,11 @@ void print_table(void) {
         }        
     }
 } 
+
+hash_node* create_temp(void) {
+    static int serial = 0;
+    char buffer[256] = "";
+
+    sprintf(buffer,"tempooooraryry_var_%d", serial++);
+    return insert_node(buffer, SYMBOL_VARIABLE);
+}

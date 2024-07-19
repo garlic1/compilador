@@ -58,6 +58,15 @@
 #define TAC_SYMBOL 44
 #define TAC_ARRAY_ACCESS 45
 
+#define TAC_JUMP_FALSE 46
+#define TAC_LABEL 47
+#define TAC_JUMP 48
+
+#define TAC_BEGIN_FUNCTION 49
+#define TAC_END_FUNCTION 50
+
+#define TAC_FUNCTION_RESULT 51
+
 typedef struct tac_node {
     int type;
     hash_node* res;
@@ -67,10 +76,10 @@ typedef struct tac_node {
     struct tac_node* next;
 } tac_node;
 
-tac_node* tac_create(int type, hash_node* res, hash_node* op1, hash_node* op2);
 void tac_print(tac_node* tac);
 void tac_print_backwards(tac_node* tac);
 tac_node* tac_join(tac_node* tac1, tac_node* tac2);
+tac_node* tac_create(int type, hash_node* res, hash_node* op1, hash_node* op2);
 
 tac_node* generate_code(AST* node);
 
