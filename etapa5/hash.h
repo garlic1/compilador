@@ -22,6 +22,7 @@ hash_node* insert_node(char *entry, int type);
 hash_node* get_node(char *entry);
 hash_node* delete_table(void);
 void print_table(void);
-hash_node* create_temp(void);
+hash_node* makeTemp(void);
+hash_node* makeLabel(void);
 
 #endif

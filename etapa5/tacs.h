@@ -44,7 +44,7 @@
 #define TAC_AND 33 
 #define TAC_OR 34
 #define TAC_NOT 35
-#define TAC_FUNCTION_CALL 36
+#define TAC_CALL 36
 
 #define TAC_INT 37
 #define TAC_BOOL 38
@@ -62,10 +62,12 @@
 #define TAC_LABEL 47
 #define TAC_JUMP 48
 
-#define TAC_BEGIN_FUNCTION 49
-#define TAC_END_FUNCTION 50
+#define TAC_BEGINFUN 49
+#define TAC_ENDFUN 50
 
-#define TAC_FUNCTION_RESULT 51
+#define TAC_RET 51
+#define TAC_FUNCTION_RESULT 52
+#define TAC_FUNCTION_ARGUMENT 53
 
 typedef struct tac_node {
     int type;

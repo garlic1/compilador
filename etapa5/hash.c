@@ -63,10 +63,18 @@ void print_table(void) {
     }
 } 
 
-hash_node* create_temp(void) {
+hash_node* makeTemp(void) {
     static int serial = 0;
     char buffer[256] = "";
 
-    sprintf(buffer,"tempooooraryry_var_%d", serial++);
+    sprintf(buffer,"temp_var_temmmp%d", serial++);
     return insert_node(buffer, SYMBOL_VARIABLE);
+}
+
+hash_node* makeLabel(void) {
+    static int serial = 0;
+    char buffer[256] = "";
+
+    sprintf(buffer,"labelll_newLABEL__%d", serial++);
+    return insert_node(buffer, SYMBOL_LABEL);
 }

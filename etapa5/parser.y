@@ -1,6 +1,7 @@
 %{
     #include "ast.h"
     #include "hash.h"
+    #include "tacs.h"
 
     int yylex(void);
     int yyerror();
@@ -70,7 +71,7 @@
 
 %%
 
-    program: global_declaration_list {ast_print($1, 0); ast_decomp($1);}
+    program: global_declaration_list {ast_print($1, 0); ast_decomp($1); tac_print_backwards(generate_code($1));}
         ;
 
     global_declaration_list: global_declaration global_declaration_list {$$ = ast_create(AST_GLOBAL_DECLARATION_LIST, 0, $1, $2, 0, 0);}
@@ -108,7 +109,6 @@
         ;
 
     simple_command: KW_PRINT type expression                {$$ = ast_create(AST_PRINT_EXPRESSION, 0, $2, $3, 0, 0);}
-        | KW_PRINT type LIT_STRING                          {AST* string_node = ast_create(AST_SYMBOL, $3, 0, 0, 0, 0); $$ = ast_create(AST_PRINT_TYPE_STRING, 0, $2, string_node, 0, 0);}
         | KW_PRINT LIT_STRING                               {AST* string_node = ast_create(AST_SYMBOL, $2, 0, 0, 0, 0); $$ = ast_create(AST_PRINT_STRING, 0, string_node, 0, 0, 0);}
         | KW_READ type TK_IDENTIFIER                        {$$ = ast_create(AST_READ, $3, $2, 0, 0, 0);}
         | KW_RETURN expression                              {$$ = ast_create(AST_RETURN, 0, $2, 0, 0, 0);}
