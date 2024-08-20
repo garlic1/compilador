@@ -14,7 +14,7 @@ extern char* yytext;
 
 int main (int argc, char **argv) {
     if (argc < 3) {
-        printf("Usage: ./etapa6 source.txt out.s\n");
+        printf("Usage: ./etapa6 source.txt out.txt\n");
         exit(1);
     }
 
