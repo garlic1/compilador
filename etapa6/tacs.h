@@ -85,4 +85,6 @@ tac_node* tac_create(int type, hash_node* res, hash_node* op1, hash_node* op2);
 
 tac_node* generate_code(AST* node);
 
+tac_node* tac_reverse(tac_node* tac);
+
 #endif

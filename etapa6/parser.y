@@ -71,7 +71,14 @@
 
 %%
 
-    program: global_declaration_list {ast_print($1, 0); ast_decomp($1); tac_print_backwards(generate_code($1));}
+    program: global_declaration_list {
+        ast_print($1, 0); 
+        ast_decomp($1); 
+        tac_node* code = generate_code($1); 
+        tac_print_backwards(code); 
+        code = tac_reverse(code); 
+        generateAsm(code);
+        }
         ;
 
     global_declaration_list: global_declaration global_declaration_list {$$ = ast_create(AST_GLOBAL_DECLARATION_LIST, 0, $1, $2, 0, 0);}

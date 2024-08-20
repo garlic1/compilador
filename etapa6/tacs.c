@@ -385,3 +385,11 @@ tac_node* makeFunctionCall(tac_node* tacs[], AST* node, hash_node* label) {
 
     return tac_join(tac_join(function_call_instruction, tacs[0]),tac_create(TAC_FUNCTION_RESULT, makeTemp(), 0, 0));
 }
+
+tac_node* tac_reverse(tac_node* tac) {
+    tac_node* t = tac;
+    for (t=tac;t->prev;t=t->prev) {
+        t->prev->next = t;
+    }
+    return t;
+}
