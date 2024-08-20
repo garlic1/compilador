@@ -1,0 +1,5 @@
+// Declarações globais de variáveis
+int a: 10;
+int main () {
+    a = 1+1;
+}
