@@ -2,6 +2,7 @@
     #include "ast.h"
     #include "hash.h"
     #include "tacs.h"
+    #include "generateAsm.h"
 
     int yylex(void);
     int yyerror();
@@ -76,7 +77,6 @@
         ast_decomp($1); 
         tac_node* code = generate_code($1); 
         tac_print_backwards(code); 
-        code = tac_reverse(code); 
         generateAsm(code);
         }
         ;

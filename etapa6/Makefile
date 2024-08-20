@@ -7,8 +7,8 @@
 # Therefore, there must be a header of it to be included in scanner.l
 #
 
-etapa5: main.o parser.tab.o lex.yy.o hash.o ast.o tacs.o
-	gcc -o etapa5 main.o parser.tab.o lex.yy.o hash.o ast.o tacs.o
+etapa6: main.o parser.tab.o lex.yy.o hash.o ast.o tacs.o generateAsm.o
+	gcc -o etapa6 main.o parser.tab.o lex.yy.o hash.o ast.o tacs.o generateAsm.o
 
 main.o: main.c
 	gcc -c main.c
@@ -22,6 +22,9 @@ ast.o: ast.c
 tacs.o: tacs.c
 	gcc -c tacs.c
 
+generateAsm.o: generateAsm.c
+	gcc -c generateAsm.c
+
 parser.tab.o lex.yy.o : parser.tab.c lex.yy.c
 	gcc -c parser.tab.c lex.yy.c
 
@@ -32,9 +35,9 @@ parser.tab.c: parser.y
 	bison -d parser.y
 
 clean:
-	rm *.o lex.yy.c parser.tab.c parser.tab.h etapa5
+	rm *.o lex.yy.c parser.tab.c parser.tab.h etapa6
 
-remake: clean etapa5
+remake: clean etapa6
 
 build: clean
-		tar cvzf etapa5.tgz .
+		tar cvzf etapa6.tgz .

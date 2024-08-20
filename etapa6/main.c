@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "hash.h"
+#include "generateAsm.h"
 
 extern FILE *yyin;
 FILE *out;
@@ -13,7 +14,7 @@ extern char* yytext;
 
 int main (int argc, char **argv) {
     if (argc < 3) {
-        printf("Usage: ./etapa5 source.txt out.txt\n");
+        printf("Usage: ./etapa6 source.txt out.s\n");
         exit(1);
     }
 

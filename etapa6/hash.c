@@ -78,3 +78,17 @@ hash_node* makeLabel(void) {
     sprintf(buffer,"labelll_newLABEL__%d", serial++);
     return insert_node(buffer, SYMBOL_LABEL);
 }
+
+void printAsm(FILE *fout) {
+    int i;
+    hash_node *node;
+    fprintf(fout, 
+                "## DATA SECTION\n"
+    );
+
+    for(i=0;i<TABLE_SIZE;i++) {
+        for(node=hash_table[i]; node; node = node->next_node) {
+            fprintf(fout, "_%s:\t.long\t0\n", node->value);
+        }
+    }
+}
