@@ -92,7 +92,7 @@ void printAsm(FILE *fout) {
 
     for(i=0;i<TABLE_SIZE;i++) {
         for(node=hash_table[i]; node; node = node->next_node) {
-            if(node->type == SYMBOL_VARIABLE || node->type == TK_IDENTIFIER)
+            if(node->type == SYMBOL_VARIABLE)
                 fprintf(fout, "_%s:\t.long\t0\n", node->value);
             else if (node->type == LIT_STRING) {
                 fprintf(fout, "\n_str%d:\t.string\t%s\n", stringCounter, node->value);

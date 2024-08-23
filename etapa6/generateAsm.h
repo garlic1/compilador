@@ -5,6 +5,6 @@
 #include "tacs.h"
 #include "hash.h"
 
-void generateAsm(tac_node* first);
+void generateAsm(tac_node* first, AST* ast);
 
 #endif

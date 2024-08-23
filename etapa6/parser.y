@@ -78,7 +78,7 @@
         tac_node* code = generate_code($1); 
         tac_print_backwards(code); 
         code = tac_reverse(code);
-        generateAsm(code);
+        generateAsm(code, $1);
         }
         ;
 

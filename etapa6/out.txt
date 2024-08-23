@@ -1,7 +1,14 @@
 int a: 1;
 int b: 2;
 int c: 3;
+int res: 0;
 int main() {
-a = a+b;
-print int a;
+res = b+c;
+print int res;
+res = b*c;
+print int res;
+res = c-b;
+print int res;
+res = b*c+c/c;
+print int res;
 }

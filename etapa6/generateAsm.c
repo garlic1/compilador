@@ -1,6 +1,19 @@
 #include "generateAsm.h"
 
-void generateAsm(tac_node* first) {
+void dataSection(FILE *fout, AST* node){
+    if(!node) return;
+	if(node->type == AST_VARIABLE_DECLARATION) {   
+    	fprintf(fout,"_%s:\t .long	%s\n",
+                     node->symbol->value,  
+                     node->children[1]->symbol->value
+                    );
+	}
+    for(int i = 0; i < MAX_CHILDREN; i++){
+		dataSection(fout, node->children[i]);
+	}
+}
+
+void generateAsm(tac_node* first, AST* ast) {
     tac_node* tac = first;
 
     FILE *fout;
@@ -54,8 +67,8 @@ void generateAsm(tac_node* first) {
                             "\n## TAC_SUB\n"
                             "\tmovl _%s(%%rip), %%eax\n"
                             "\tmovl _%s(%%rip), %%edx\n"
-                            "\tsubl %%eax, %%edx\n"
-                            "\tmovl %%edx, _%s(%%rip)\n", 
+                            "\tsubl %%edx, %%eax \n"
+                            "\tmovl %%eax, _%s(%%rip)\n", 
                             tac->op1->value, 
                             tac->op2->value, 
                             tac->res->value
@@ -109,6 +122,18 @@ void generateAsm(tac_node* first) {
                             tac->res?tac->res->value:""
                 );
                 break;
+                	
+            case TAC_PRINT_STRING:                
+                fprintf(fout,
+                            "\n## TAC_PRINT_STRING\n"
+                            "\tleaq	%s(%%rip), %%rdi\n"
+                            "\tmovb	$0, %%al\n"
+                            "\tcallq	printf@PLT\n",
+                            tac->res?tac->res->value:""
+                );
+                break;
+                
+                break;
             case TAC_READ:
                 fprintf(fout, 
                             "\n## TAC_INPUT\n"
@@ -154,17 +179,16 @@ void generateAsm(tac_node* first) {
             case TAC_WHILE:
                 break;
             
-            case TAC_PRINT_STRING:
-                break;
 
             case TAC_RETURN:
                 break;
         }
         tac = tac->next;
     }
-    
+
     //hash table
     printAsm(fout);
+    dataSection(fout, ast);
 
     fclose(fout);
 }
