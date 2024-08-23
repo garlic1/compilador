@@ -26,6 +26,8 @@ void generateAsm(tac_node* first, AST* ast) {
             "\t.asciz \"%%d\\n\" \n"
             ".print_str:\n"
             "\t.asciz \"%%s\\n\" \n"
+            ".read_int:\n"
+            "\t.asciz \"%%d\" \n"
     );
 
     //each tac
@@ -133,11 +135,10 @@ void generateAsm(tac_node* first, AST* ast) {
                 );
                 break;
                 
-                break;
             case TAC_READ:
                 fprintf(fout, 
                             "\n## TAC_INPUT\n"
-                            "\tleaq	.print_int(%%rip), %%rdi\n"
+                            "\tleaq	.read_int(%%rip), %%rdi\n"
                             "\tleaq	_%s(%%rip), %%rsi\n"
                             "\tmovb	$0, %%al\n"
                             "\tcallq	__isoc99_scanf@PLT\n",

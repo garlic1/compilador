@@ -265,7 +265,7 @@ tac_node* generate_code(AST* node) {
             output = tac_join(code[0], tac_create(TAC_PRINT_STRING,code[0]?code[0]->res:0,0,0));
             break;
         case AST_READ:
-            output = tac_join(code[0],tac_create(TAC_READ,makeTemp(),0,0));
+            output = tac_join(code[0],tac_create(TAC_READ,node->symbol,0,0));
             break;
         case AST_IF:
             output = makeIf(code[0], code[1]);

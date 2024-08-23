@@ -1,14 +1,6 @@
-int a: 1;
-int b: 2;
-int c: 3;
-int res: 0;
+int a: 0;
 int main() {
-res = b+c;
-print int res;
-res = b*c;
-print int res;
-res = c-b;
-print int res;
-res = b*c+c/c;
-print int res;
+read int a;
+a = a*a;
+print int a;
 }
