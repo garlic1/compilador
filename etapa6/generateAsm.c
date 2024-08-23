@@ -15,8 +15,6 @@ void generateAsm(tac_node* first) {
             "\t.asciz \"%%s\\n\" \n"
     );
 
-    //hash table
-    printAsm(fout);
     //each tac
     while(tac) {
         switch(tac->type) {
@@ -40,7 +38,7 @@ void generateAsm(tac_node* first) {
                 break;
             case TAC_SUM:
                 fprintf(fout,
-                            "\n## TAC_ADD\n"
+                            "\n## TAC_SUM\n"
                             "\tmovl _%s(%%rip), %%eax\n"
                             "\tmovl _%s(%%rip), %%edx\n"
                             "\taddl %%eax, %%edx\n"
@@ -93,7 +91,7 @@ void generateAsm(tac_node* first) {
             
             case TAC_VARIABLE_ATTRIBUTION:
                 fprintf(fout,
-                            "\n## TAC_ATTR\n"
+                            "\n## TAC_VARIABLE_ATTRIBUTION\n"
                             "\tmovl _%s(%%rip), %%eax\n"
                             "\tmovl %%eax, _%s(%%rip)\n", 
                             tac->op1->value, 
@@ -103,7 +101,7 @@ void generateAsm(tac_node* first) {
             
             case TAC_PRINT_EXPRESSION:
                 fprintf(fout,
-                            "\n## TAC_PRINT\n"
+                            "\n## TAC_PRINT_EXPRESSION\n"
                             "\tmovl	_%s(%%rip), %%esi\n"
                             "\tleaq	.print_int(%%rip), %%rdi\n"
                             "\tmovb	$0, %%al\n"
@@ -164,8 +162,9 @@ void generateAsm(tac_node* first) {
         }
         tac = tac->next;
     }
+    
+    //hash table
+    printAsm(fout);
 
     fclose(fout);
-
-
 }

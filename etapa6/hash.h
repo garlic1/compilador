@@ -14,6 +14,7 @@ typedef struct hash_node {
     int type;
     char *value;
     struct hash_node *next_node;
+    int initial_value;
 } hash_node;
 
 void init_table(void);

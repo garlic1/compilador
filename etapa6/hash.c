@@ -1,4 +1,6 @@
 #include "hash.h"
+#include "ast.h"
+#include "parser.tab.h"
 
 hash_node* hash_table[TABLE_SIZE];
 
@@ -81,14 +83,20 @@ hash_node* makeLabel(void) {
 
 void printAsm(FILE *fout) {
     int i;
+    int stringCounter = 0;
     hash_node *node;
     fprintf(fout, 
                 "## DATA SECTION\n"
+                ".data\n"
     );
 
     for(i=0;i<TABLE_SIZE;i++) {
         for(node=hash_table[i]; node; node = node->next_node) {
-            fprintf(fout, "_%s:\t.long\t0\n", node->value);
+            if(node->type == SYMBOL_VARIABLE || node->type == TK_IDENTIFIER)
+                fprintf(fout, "_%s:\t.long\t0\n", node->value);
+            else if (node->type == LIT_STRING) {
+                fprintf(fout, "\n_str%d:\t.string\t%s\n", stringCounter, node->value);
+            }
         }
     }
 }
