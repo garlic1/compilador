@@ -1,0 +1,6 @@
+int a: 0;
+int main() {
+read int a;
+a = a*a;
+print int a;
+}

@@ -1,0 +1,20 @@
+int a: 1;
+int b: 2;
+int c: 3;
+int res: 0;
+
+int main () {
+	// 2 + 3 = 5
+	res = b + c;
+	print int res;
+	// 2 * 3 = 6
+	res = b * c;
+	print int res;
+	// 3 - 2 = 1
+	res = c - b;
+	print int res;
+	// (2 * 3 + 3) / 3 = 3
+	res = (b*c + c) / c;
+	print int res;
+}
+
